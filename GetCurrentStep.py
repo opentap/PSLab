@@ -7,10 +7,10 @@ from System import Double
 from PythonTap import *
 from OpenTap import DisplayAttribute, UnitAttribute
 
-from .PSLabTestStep import PSLabTestStep
+from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .PowerSupply import PowerSupply
 
-class GetCurrentStep(PSLabTestStep):
+class GetCurrentStep(PSLabPublisherTestStep):
     def __init__(self):
         super(GetCurrentStep, self).__init__()
         print("Get current test step initialized")
@@ -20,6 +20,8 @@ class GetCurrentStep(PSLabTestStep):
 
     # Inherited method from PythonTap TestStep abstract class
     def Run(self):
+        current = float(self.PowerSupply.getPcs())
+        super(GetCurrentStep, self).PublishStepResult("PowerSupply", ["Current"], [current])
         self.PowerSupply.getPcs()
         pass
 
