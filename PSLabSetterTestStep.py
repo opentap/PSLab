@@ -1,12 +1,12 @@
 from PythonTap import *
 
 """
-Wrapper for PSLab Test step
+Wrapper for PSLab Test step that publishes its results
 """
 @Abstract
-class PSLabTestStep(TestStep):
+class PSLabSetterTestStep(TestStep):
     def __init__(self):
-        super(PSLabTestStep, self).__init__()
+        super(PSLabSetterTestStep, self).__init__()
         print("Test step initialized")
 
     def setInstrument(instrument):

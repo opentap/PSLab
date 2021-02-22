@@ -8,10 +8,10 @@ from enum import Enum
 from PythonTap import *
 from OpenTap import DisplayAttribute, UnitAttribute
 
-from .PSLabTestStep import PSLabTestStep
+from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PowerSupply import *
 
-class SetVoltageStep(PSLabTestStep):
+class SetVoltageStep(PSLabSetterTestStep):
     def __init__(self):
         super(SetVoltageStep, self).__init__()
         print("Set voltage test step initialized")

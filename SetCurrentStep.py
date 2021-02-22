@@ -7,10 +7,10 @@ from System import Double
 from PythonTap import *
 from OpenTap import DisplayAttribute, UnitAttribute
 
-from .PSLabTestStep import PSLabTestStep
+from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PowerSupply import PowerSupply
 
-class SetCurrentStep(PSLabTestStep):
+class SetCurrentStep(PSLabSetterTestStep):
     def __init__(self):
         super(SetCurrentStep, self).__init__()
         print("Set current test step initialized")
