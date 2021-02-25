@@ -8,10 +8,10 @@ from enum import Enum
 from PythonTap import *
 from OpenTap import DisplayAttribute, UnitAttribute
 
-from .PSLabTestStep import PSLabTestStep
+from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .PowerSupply import *
 
-class GetVoltageStep(PSLabTestStep):
+class GetVoltageStep(PSLabPublisherTestStep):
     def __init__(self):
         super(GetVoltageStep, self).__init__()
         print("Get voltage test step initialized")
@@ -24,7 +24,9 @@ class GetVoltageStep(PSLabTestStep):
 
     # Inherited method from PythonTap TestStep abstract class
     def Run(self):
-        self.PowerSupply.getVoltage(self.Pin)
+        # super(GetVoltageStep, self).PublishStepResult("PowerSupply", ["Voltage"], [self.PowerSupply.getVoltage(self.Pin)])
+        voltage = float(self.PowerSupply.getVoltage(self.Pin))
+        super(GetVoltageStep, self).PublishStepResult("PowerSupply", ["Voltage"], [voltage])
         pass
 
     # Inherited method from PythonTap TestStep abstract class
