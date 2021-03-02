@@ -11,6 +11,8 @@ from .SetCurrentStep import *
 from .GetCurrentStep import *
 from .SetVoltageStep import *
 from .GetVoltageStep import *
+from .Oscilloscope import *
+from .CaptureVoltageStep import *
 
 
 ## Advanced Section ##
