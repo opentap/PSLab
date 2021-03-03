@@ -13,7 +13,7 @@ class Oscilloscope(PSLabInstrument):
     def Open(self):
         super(Oscilloscope, self).Open()
         # Open COM connection to instrument, blocks other instrument connections while connected
-        self.instrument = PSLabOscilloscope(ConnectionHandler.openConnection())
+        self.instrument = PSLabOscilloscope()# ConnectionHandler.openConnection())
         """Called by TAP when the test plan starts"""
         self.Info("PSLab Oscilloscope Opened")
 
@@ -22,7 +22,7 @@ class Oscilloscope(PSLabInstrument):
         self.Info("PSLab Oscilloscope Closed")
         super(Oscilloscope, self).Close()
         # Call ConnectionHandler.closeConnection() to close
-        ConnectionHandler.closeConnection()
+        #ConnectionHandler.closeConnection()
 
     def capture(self, channels, samples, timegap):
         """Capture an oscilloscope trace from the specified input channels."""
