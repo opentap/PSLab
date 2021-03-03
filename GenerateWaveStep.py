@@ -1,5 +1,5 @@
 """
-Test step to Create_AWG
+Test step to generate a waveform
 """
 
 from System import Double
@@ -8,13 +8,13 @@ from PythonTap import *
 from OpenTap import DisplayAttribute, UnitAttribute
 
 from .PSLabSetterTestStep import PSLabSetterTestStep
-from .Create_AWG import Create_AWG
-from .Create_AWG import Pin
+from .WaveformGenerator import *
 
 
-class GenerateWave(PSLabSetterTestStep):
+class GenerateWaveStep(PSLabSetterTestStep):
     def __init__(self):
-        super(GenerateWave, self).__init__()
+        """Set up the properties, methods, and default values of the step."""
+        super(GenerateWaveStep, self).__init__()
         print("GenerateWave test step initialized")
 
         prop = self.AddProperty("channels", Pin.SI1, Pin)
@@ -29,12 +29,13 @@ class GenerateWave(PSLabSetterTestStep):
         prop.AddAttribute(DisplayAttribute, "phase", "The phase to be output", "Measurements", -50)
         prop.AddAttribute(UnitAttribute, "A") # this is used for the unit of measurement
 
-        prop = self.AddProperty("Create_AWG", None, Create_AWG)
-        prop.AddAttribute(DisplayAttribute, "Create AWG", "", "Resources", -100)
+        prop = self.AddProperty("WaveformGenerator", None, WaveformGenerator)
+        prop.AddAttribute(DisplayAttribute, "WaveformGenerator", "", "Resources", -100)
 
     # Inherited method from PythonTap TestStep abstract class
     def Run(self):
-        self.Create_AWG.generate(self.channels.value, self.frequency, self.phase)
+        """Called when the test step is executed."""
+        self.WaveformGenerator.generate(self.channels.value, self.frequency, self.phase)
         pass
 
     # Inherited method from PythonTap TestStep abstract class
