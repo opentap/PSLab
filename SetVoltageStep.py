@@ -20,7 +20,7 @@ class SetVoltageStep(PSLabSetterTestStep):
         prop.AddAttribute(DisplayAttribute, "Voltage", "The voltage to be output on the chosen PV pin", "Measurements", -50)
         prop.AddAttribute(UnitAttribute, "V")
 
-        prop = self.AddProperty("Pin", Pin.ONE, Pin)
+        prop = self.AddProperty("Pin", PowerPin.ONE, PowerPin)
         prop.AddAttribute(DisplayAttribute, "Pin", "The chosen PV pin", "", -50)
 
         prop = self.AddProperty("PowerSupply", None, PowerSupply)

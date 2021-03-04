@@ -10,6 +10,7 @@ from OpenTap import DisplayAttribute
 from pslab import WaveformGenerator as PSLabWaveformGenerator
 
 from .PSLabInstrument import PSLabInstrument
+from .ConnectionHandler import ConnectionHandler
     
 from typing import Callable, List, Tuple, Union
 
@@ -23,7 +24,7 @@ from typing import Callable, List, Tuple, Union
 
 from enum import Enum
 
-class Pin(Enum):
+class WaveformPin(Enum):
     SI1 = "SI1"
     SI2 = "SI2"
 
@@ -41,13 +42,14 @@ class WaveformGenerator(PSLabInstrument):
     def Open(self):
         """Called by TAP when the test plans starts."""
         super(WaveformGenerator, self).Open()
-        self.instrument = PSLabWaveformGenerator()
+        self.instrument = PSLabWaveformGenerator(ConnectionHandler.openConnection())
         self.Info("PSLab Waveform Generator opened")
 
     def Close(self):
         """Called by TAP when the test plans ends."""
         self.Info("PSLab Waveform Generator closed")
         super(WaveformGenerator, self).Close()
+        ConnectionHandler.closeConnection()
 
     def generate(
         self,

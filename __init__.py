@@ -13,6 +13,8 @@ from .SetVoltageStep import *
 from .GetVoltageStep import *
 from .Oscilloscope import *
 from .CaptureVoltageStep import *
+from .WaveformGenerator import *
+from .GenerateWaveStep import *
 
 
 ## Advanced Section ##

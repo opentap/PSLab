@@ -2,6 +2,7 @@ from PythonTap import *
 from OpenTap import DisplayAttribute
 from pslab import Oscilloscope as PSLabOscilloscope
 from .PSLabInstrument import PSLabInstrument
+from .ConnectionHandler import ConnectionHandler
 
 @Attribute(DisplayAttribute, "Oscilloscope", "Oscilloscope Instrument", "PSLab")
 class Oscilloscope(PSLabInstrument):
@@ -12,8 +13,8 @@ class Oscilloscope(PSLabInstrument):
 
     def Open(self):
         super(Oscilloscope, self).Open()
-        # Open COM connection to instrument, blocks other instrument connections while connected
-        self.instrument = PSLabOscilloscope()# ConnectionHandler.openConnection())
+        # Open COM connection to instrument using ConnectionHandler
+        self.instrument = PSLabOscilloscope(ConnectionHandler.openConnection())
         """Called by TAP when the test plan starts"""
         self.Info("PSLab Oscilloscope Opened")
 
@@ -21,8 +22,7 @@ class Oscilloscope(PSLabInstrument):
         """Called by TAP when the test plan ends."""
         self.Info("PSLab Oscilloscope Closed")
         super(Oscilloscope, self).Close()
-        # Call ConnectionHandler.closeConnection() to close
-        #ConnectionHandler.closeConnection()
+        ConnectionHandler.closeConnection()
 
     def capture(self, channels, samples, timegap):
         """Capture an oscilloscope trace from the specified input channels."""
