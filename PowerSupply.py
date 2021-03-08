@@ -23,13 +23,13 @@ class PowerSupply(PSLabInstrument):
         "Set up the properties, methods and default values of the instrument."
         super(PowerSupply, self).__init__() # The base class initializer must be invoked.
 
-        self.Name = "PowerSupply"
+        self.Name = "Power Supply"
         self.RegisterMethod("pcs", None).AddArgument("current", Double)
 
     def Open(self):
         super(PowerSupply, self).Open()
         # Open COM connection to instrument through ConnectionHandler
-        self.instrument = PSLabPowerSupply(ConnectionHandler.openConnection())
+        self.instrument = ConnectionHandler.instance().getPowerSupply()
         """Called by TAP when the test plan starts."""
         self.Info("PSLab Power Supply Opened")
 
@@ -37,7 +37,6 @@ class PowerSupply(PSLabInstrument):
         """Called by TAP when the test plan ends."""
         self.Info("PSLab Power Supply Closed")
         super(PowerSupply, self).Close()
-        ConnectionHandler.closeConnection()
 
     def setPcs(self, current):
         self.instrument.pcs = current

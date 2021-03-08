@@ -1,5 +1,6 @@
 from PythonTap import *
 from OpenTap import DisplayAttribute
+from System import Array, Double, Int32
 from pslab import Oscilloscope as PSLabOscilloscope
 from .PSLabInstrument import PSLabInstrument
 from .ConnectionHandler import ConnectionHandler
@@ -14,7 +15,7 @@ class Oscilloscope(PSLabInstrument):
     def Open(self):
         super(Oscilloscope, self).Open()
         # Open COM connection to instrument using ConnectionHandler
-        self.instrument = PSLabOscilloscope(ConnectionHandler.openConnection())
+        self.instrument = ConnectionHandler.instance().getOscilloscope()
         """Called by TAP when the test plan starts"""
         self.Info("PSLab Oscilloscope Opened")
 
@@ -22,7 +23,6 @@ class Oscilloscope(PSLabInstrument):
         """Called by TAP when the test plan ends."""
         self.Info("PSLab Oscilloscope Closed")
         super(Oscilloscope, self).Close()
-        ConnectionHandler.closeConnection()
 
     def capture(self, channels, samples, timegap):
         """Capture an oscilloscope trace from the specified input channels."""
@@ -40,4 +40,4 @@ class Oscilloscope(PSLabInstrument):
             return x,y1,y2,y3,y4
         else:
             error("Invalid number of channels")
-        pass
+        pass 
