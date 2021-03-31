@@ -11,6 +11,7 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .PowerSupply import *
 
+@Attribute(DisplayAttribute, "Get Voltage", "Gets voltage of pin", "PSLab")
 class GetVoltageStep(PSLabPublisherTestStep):
     def __init__(self):
         super(GetVoltageStep, self).__init__()

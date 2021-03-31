@@ -12,37 +12,25 @@ from pslab.instrument.waveform_generator import logger
 logger.setLevel('ERROR')
 
 from .PSLabInstrument import PSLabInstrument
-
-
 from .ConnectionHandler import ConnectionHandler
 
-    
 from typing import Callable, List, Tuple, Union
-
-# import numpy as np
-
-# import pslab.protocol as CP
-# from pslab.instrument.analog import AnalogOutput
-
-# from pslab.instrument.digital import DigitalOutput, DIGITAL_OUTPUTS
-# from pslab.serial_handler import SerialHandler
-
 from enum import Enum
 
 class WaveformPin(Enum):
     SI1 = "SI1"
     SI2 = "SI2"
 
-@Attribute(DisplayAttribute, "Waveform Generator", "Waveform generator instrument", "PSLab")
+@Attribute(DisplayAttribute, "Waveform Generator", "Waveform Generator Instrument", "PSLab")
 class WaveformGenerator(PSLabInstrument):    
     def __init__(self):
         """Set up the properties, methods, and default values of the instrument."""
         super(WaveformGenerator, self).__init__()
 
         self.Name = "Waveform Generator"
-        self.RegisterMethod("generate", None).AddArgument("channels", String)
-        self.RegisterMethod("generate", None).AddArgument("frequency", String)
-        self.RegisterMethod("generate", None).AddArgument("phase", Double)
+        self.RegisterMethod("generate", None).AddArgument("Channels", String)
+        self.RegisterMethod("generate", None).AddArgument("Frequency", String)
+        self.RegisterMethod("generate", None).AddArgument("Phase", Double)
         
     def Open(self):
         """Called by TAP when the test plans starts."""
