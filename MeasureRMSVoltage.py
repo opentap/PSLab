@@ -23,7 +23,7 @@ def calc_rms_sample(frequency, samples_per_period = 32):
 
 
 
-@Attribute(DisplayAttribute, "Measure RMS Voltage", "Measures RMS Voltage at a specific Frequency", "PSLab")
+@Attribute(DisplayAttribute, "Measure RMS Voltage", "Measures RMS Voltage at a specific Frequency", Groups= ["PSLab", "Oscilloscope"])
 class MeasureRMSVoltage(PSLabPublisherTestStep):
     def __init__(self):
         super(MeasureRMSVoltage, self).__init__()

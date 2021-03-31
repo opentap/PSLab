@@ -10,7 +10,7 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabSetterTestStep import PSLabSetterTestStep
 from .WaveformGenerator import *
 
-@Attribute(DisplayAttribute, "Generate Wave", "Generates a wave using the Waveform Generator instrument ", "PSLab")
+@Attribute(DisplayAttribute, "Generate Wave", "Generates a wave using the Waveform Generator instrument ", Groups= ["PSLab", "Waveform Generator"])
 class GenerateWaveStep(PSLabSetterTestStep):
     def __init__(self):
         """Set up the properties, methods, and default values of the step."""

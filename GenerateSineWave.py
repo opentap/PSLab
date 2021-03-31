@@ -23,7 +23,7 @@ def getStrFromSineWavePin(pin: SineWavePin):
     else: 
         return "SI2"
 
-@Attribute(DisplayAttribute, "Generate Sine Wave", "Generates a Sine Wave of given frequency and phase on given pin", "PSLab")
+@Attribute(DisplayAttribute, "Generate Sine Wave", "Generates a Sine Wave of given frequency and phase on given pin", Groups= ["PSLab", "Waveform Generator"])
 class GenerateSineWave(TestStep):
     def __init__(self):
         """Set up the properties, methods, and default values of the step."""

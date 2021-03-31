@@ -11,7 +11,7 @@ from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .Oscilloscope import *
 
-@Attribute(DisplayAttribute, "Capture Voltage", "Captures varying voltages using Oscilloscope", "PSLab")
+@Attribute(DisplayAttribute, "Capture Voltage", "Captures varying voltages using Oscilloscope", Groups= ["PSLab", "Oscilloscope"])
 class CaptureVoltageStep(PSLabPublisherTestStep):
     def __init__(self):
         super(CaptureVoltageStep, self).__init__()
