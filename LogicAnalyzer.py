@@ -2,7 +2,7 @@
 Instrument wrapper for PSLab Logic Analyzer Instrument
 """
 
-from System import Double
+from System import Double, Boolean
 
 from PythonTap import *
 from OpenTap import DisplayAttribute
@@ -14,19 +14,21 @@ from .PSLabInstrument import PSLabInstrument
 from .ConnectionHandler import ConnectionHandler
 
 class DigitalPin(Enum):
-    LA1 = "LA1"
-    LA2 = "LA2"
-    LA3 = "LA3"
-    LA4 = "LA4"
+    LA1 = 0
+    LA2 = 1
+    LA3 = 2
+    LA4 = 3
 
-@Attribute(DisplayAttribute, "Logic Analyzer", "Logic Analyzer Instrument", "PSLab")
+@Attribute(DisplayAttribute, "LogicAnalyzer", "Logic Analyzer Instrument", "PSLab")
 class LogicAnalyzer(PSLabInstrument):
     def __init__(self):
         "Set up the properties, methods and default values of the instrument."
         super(LogicAnalyzer, self).__init__() # The base class initializer must be invoked.
 
         self.Name = "Logic Analyzer"
-        self.RegisterMethod("pcs", None).AddArgument("current", Double)
+        self.RegisterMethod("measure_frequency", None).AddArgument("channel", DigitalPin)
+        self.RegisterMethod("measure_frequency", None).AddArgument("simultaneous_oscilloscope", Boolean)
+        self.RegisterMethod("measure_frequency", None).AddArgument("timeout", Double)
 
     def Open(self):
         super(LogicAnalyzer, self).Open()
@@ -39,6 +41,18 @@ class LogicAnalyzer(PSLabInstrument):
         """Called by TAP when the test plan ends."""
         self.Info("PSLab Power Supply Closed")
         super(LogicAnalyzer, self).Close()
+
+    def getPinName(self, pin):
+        if pin == DigitalPin.LA1:
+            return "LA1"
+        elif pin == DigitalPin.LA2:
+            return "LA2"
+        elif pin == DigitalPin.LA3:
+            return "LA3"
+        elif pin == DigitalPin.LA4:
+            return "LA4"
+        else:
+            raise ValueError("Invalid pin")
 
     def measure_frequency(self, channel, simultaneous_oscilloscope=False, timeout=1):
         """Method to measure the frequency on one or multiple channels"""

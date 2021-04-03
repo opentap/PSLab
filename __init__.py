@@ -18,6 +18,7 @@ from .GenerateWaveStep import *
 from .MeasureRMSVoltage import *
 from .GenerateSineWave import * 
 from .LogicAnalyzer import *
+from .MeasureFrequencyStep import * 
 ## Advanced Section ##
 IncludeLockManager = False 
 #IncludeLockManager = True # Uncomment this to include the lock manager example.
