@@ -31,7 +31,7 @@ class MeasureFrequencyStep(PSLabPublisherTestStep):
 
     # Inherited method from PythonTap TestStep abstract class
     def Run(self):
-        frequency = self.LogicAnalyzer.capture(self.LogicAnalyzer.getPinName(self.channel), self.simultaneous_oscilloscope, self.timeout)
+        frequency = self.LogicAnalyzer.measure_frequency(self.LogicAnalyzer.getPinName(self.channel), self.simultaneous_oscilloscope, self.timeout)
         self.PublishStepResult("Measured Frequency", ["Frequency"], [frequency])
         pass
 
