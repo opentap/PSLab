@@ -9,6 +9,7 @@ from OpenTap import DisplayAttribute
 
 from pslab import PowerSupply as PSLabPowerSupply
 from pslab import protocol as CP
+from pslab.instrument.digital import MODES
 
 from .PSLabInstrument import PSLabInstrument
 from .ConnectionHandler import ConnectionHandler
