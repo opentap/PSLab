@@ -10,14 +10,14 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabSetterTestStep import PSLabSetterTestStep
 from .WaveformGenerator import *
 
-
+@Attribute(DisplayAttribute, "Generate Wave", "Generates a wave using the Waveform Generator instrument ", Groups= ["PSLab", "Waveform Generator"])
 class GenerateWaveStep(PSLabSetterTestStep):
     def __init__(self):
         """Set up the properties, methods, and default values of the step."""
         super(GenerateWaveStep, self).__init__()
         print("GenerateWave test step initialized")
 
-        prop = self.AddProperty("channels", Pin.SI1, Pin)
+        prop = self.AddProperty("channels", WaveformPin.SI1, WaveformPin)
         prop.AddAttribute(DisplayAttribute, "Channels", "The current to be output on the PCS pin", "Measurements", -50)
         prop.AddAttribute(UnitAttribute, "A")
 

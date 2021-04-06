@@ -10,8 +10,9 @@ from OpenTap import DisplayAttribute
 from pslab import PowerSupply as PSLabPowerSupply
 
 from .PSLabInstrument import PSLabInstrument
+from .ConnectionHandler import ConnectionHandler
 
-class Pin(Enum):
+class PowerPin(Enum):
     ONE = 0
     TWO = 1
     THREE = 2
@@ -22,13 +23,13 @@ class PowerSupply(PSLabInstrument):
         "Set up the properties, methods and default values of the instrument."
         super(PowerSupply, self).__init__() # The base class initializer must be invoked.
 
-        self.Name = "PowerSupply"
+        self.Name = "Power Supply"
         self.RegisterMethod("pcs", None).AddArgument("current", Double)
 
     def Open(self):
         super(PowerSupply, self).Open()
-        # Open COM connection to instrument, blocks other instrument connections while connected
-        self.instrument = PSLabPowerSupply()
+        # Open COM connection to instrument through ConnectionHandler
+        self.instrument = ConnectionHandler.instance().getPowerSupply()
         """Called by TAP when the test plan starts."""
         self.Info("PSLab Power Supply Opened")
 
@@ -47,11 +48,11 @@ class PowerSupply(PSLabInstrument):
         return current
 
     def setVoltage(self, pin, voltage):
-        if pin is Pin.ONE:
+        if pin is PowerPin.ONE:
             self.instrument.pv1 = voltage
-        elif pin is Pin.TWO:
+        elif pin is PowerPin.TWO:
             self.instrument.pv2 = voltage
-        elif pin is Pin.THREE:
+        elif pin is PowerPin.THREE:
             self.instrument.pv3 = voltage
         else:
             error("Bad pin number")
@@ -59,13 +60,13 @@ class PowerSupply(PSLabInstrument):
         self.Info(f"PSLab Power Supply {pin} pin voltage set to {voltage}")
 
     def getVoltage(self, pin):
-        if pin is Pin.ONE:
+        if pin is PowerPin.ONE:
             self.Info(f"PSLab Power Supply {pin} pin voltage is {self.instrument.pv1}")
             return self.instrument.pv1
-        elif pin is Pin.TWO:
+        elif pin is PowerPin.TWO:
             self.Info(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv2}")
             return self.instrument.pv2
-        elif pin is Pin.THREE:
+        elif pin is PowerPin.THREE:
             self.Info(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv3}")
             return self.instrument.pv3
         else:

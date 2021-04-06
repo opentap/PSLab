@@ -10,6 +10,7 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .PowerSupply import PowerSupply
 
+@Attribute(DisplayAttribute, "Get Current", "Gets current of pin", Groups= ["PSLab", "Power Supply"])
 class GetCurrentStep(PSLabPublisherTestStep):
     def __init__(self):
         super(GetCurrentStep, self).__init__()

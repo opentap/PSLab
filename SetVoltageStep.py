@@ -11,6 +11,7 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PowerSupply import *
 
+@Attribute(DisplayAttribute, "Set Voltage", "Sets pin to a specific voltage", Groups= ["PSLab", "Power Supply"])
 class SetVoltageStep(PSLabSetterTestStep):
     def __init__(self):
         super(SetVoltageStep, self).__init__()
@@ -20,7 +21,7 @@ class SetVoltageStep(PSLabSetterTestStep):
         prop.AddAttribute(DisplayAttribute, "Voltage", "The voltage to be output on the chosen PV pin", "Measurements", -50)
         prop.AddAttribute(UnitAttribute, "V")
 
-        prop = self.AddProperty("Pin", Pin.ONE, Pin)
+        prop = self.AddProperty("Pin", PowerPin.ONE, PowerPin)
         prop.AddAttribute(DisplayAttribute, "Pin", "The chosen PV pin", "", -50)
 
         prop = self.AddProperty("PowerSupply", None, PowerSupply)

@@ -10,6 +10,7 @@ from OpenTap import DisplayAttribute, UnitAttribute
 from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PowerSupply import PowerSupply
 
+@Attribute(DisplayAttribute, "Set Current", "Sets pin to a sepcific current amount", Groups= ["PSLab", "Power Supply"])
 class SetCurrentStep(PSLabSetterTestStep):
     def __init__(self):
         super(SetCurrentStep, self).__init__()
