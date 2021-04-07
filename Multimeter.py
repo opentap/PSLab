@@ -25,17 +25,17 @@ class Multimeter(PSLabInstrument):
 
     def measure_resistance(self):
         """Measure the resistance of a resistor connected between RES and GND."""
-        self.instrument.measure_resistance()
+        return self.instrument.measure_resistance()
 
     def measure_voltage(self, channel = "VOL"):
         """Measure the voltage on the selected channel."""
-        self.instrument.measure_voltage(channel)
+        return self.instrument.measure_voltage(channel)
 
     def calibrate_capacitance(self):
         """Calibrate stray capacitance."""
-        self.instrument.calibrate_capacitance()
+        return self.instrument.calibrate_capacitance()
 
     def measure_capacitance(self):
         """Measure the capacitance of a capacitor connected between CAP and GND."""
-        self.instrument.measure_capacitance()
+        return self.instrument.measure_capacitance()
     
