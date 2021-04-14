@@ -23,7 +23,11 @@ class GetInitialStatesStep(PSLabPublisherTestStep):
     # Inherited method from PythonTap TestStep abstract class
     def Run(self):
         initial_states = self.LogicAnalyzer.get_initial_states()
-        self.PublishStepResult("Initial States", ["Initial States"], [initial_states])
+        initial_states_names = list(initial_states.keys())
+        initial_states_values = list(initial_states.values())
+        self.Info("initial states: " + ', '.join(initial_states_names))
+        self.Info("initial values: " + ', '.join([str(val) for val in initial_states_values]))
+        self.PublishStepResult("Initial States", initial_states_names, initial_states_values)
         pass
 
     # Inherited method from PythonTap TestStep abstract class
