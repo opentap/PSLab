@@ -22,6 +22,8 @@ from .MeasureFrequencyStep import *
 from .MeasureIntervalStep import * 
 from .MeasureDutyCycleStep import * 
 from .GetInitialStatesStep import * 
+from .GetStatesStep import * 
+
 ## Advanced Section ##
 IncludeLockManager = False 
 #IncludeLockManager = True # Uncomment this to include the lock manager example.

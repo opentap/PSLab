@@ -55,14 +55,17 @@ class LogicAnalyzer(PSLabInstrument):
         else:
             raise ValueError("Invalid pin")
 
+    # Not tested
     def measure_frequency(self, channel, simultaneous_oscilloscope=False, timeout=1):
         """Method to measure the frequency on one or multiple channels"""
         self.instrument.measure_frequency(channel, simultaneous_oscilloscope, timeout)
 
+    # Not tested
     def measure_interval(self, channels, modes, timeout=1):
         """Method to measure the interval between two events"""
         self.instrument.measure_interval(channels, modes, timeout)
 
+    # Not tested
     def measure_duty_cycle(self, channel, timeout=1):
         """Method to measure the duty cycle and wavelength, cannot be used at the same time as oscilloscope"""
         self.instrument.measure_duty_cycle(channel, timeout)
@@ -79,6 +82,7 @@ class LogicAnalyzer(PSLabInstrument):
         """Method to return number of collected events per channel in buffer"""
         return self.instrument.get_progress()
 
+    # Not tested
     def get_initial_states(self):
         """Method to return initial state of each digital input at start of capture"""
         return self.instrument.get_initial_states()
