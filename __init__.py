@@ -23,6 +23,12 @@ from .MeasureIntervalStep import *
 from .MeasureDutyCycleStep import * 
 from .GetInitialStatesStep import * 
 from .GetStatesStep import * 
+from .FetchDataStep import *
+from .GetProgressStep import *
+from .StopCaptureStep import *
+from .GetPulseCountStep import *
+from .LogicAnalyzerCaptureStep import *
+from .CountPulsesStep import *
 
 ## Advanced Section ##
 IncludeLockManager = False 

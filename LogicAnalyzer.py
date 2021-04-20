@@ -70,43 +70,42 @@ class LogicAnalyzer(PSLabInstrument):
         """Method to measure the duty cycle and wavelength, cannot be used at the same time as oscilloscope"""
         self.instrument.measure_duty_cycle(channel, timeout)
 
+    # Tested with no events and block=False
     def capture(self, channels, events=CP.MAX_SAMPLES//4, timeout=1, modes=4*("any",), e2e_time=None, block=True):
         """Method to capture logic events, cannot be used at the same time as oscilloscope."""
         self.instrument.capture(channels, events, timeout, modes, e2e_time, block)
 
+    # Not tested
     def fetch_data(self):
         """Method to collect captured events"""
         return self.instrument.fetch_data()
 
+    # Not tested
     def get_progress(self):
         """Method to return number of collected events per channel in buffer"""
         return self.instrument.get_progress()
 
-    # Not tested
+    # Tested without signal
     def get_initial_states(self):
         """Method to return initial state of each digital input at start of capture"""
         return self.instrument.get_initial_states()
 
-    def get_xy(self, timestamps, inital_states=None):
-        """Method to turn timestamps into plottable data"""
-        return self.instrument.get_xy(timestamps, initial_states)
-
-    def configure_trigger(self, trigger_channel, trigger_mode):
-        """Method to set up a trigger channel and trigger conditions"""
-        self.instrument.configure_trigger(trigger_channel, trigger_mode)
-
+    # Not tested
     def stop(self):
         """Method to stop running the capture function"""
         self.instrument.stop()
 
+    # Tested without signal
     def get_states(self):
         """Method to get the current states of the digital inputs"""
         return self.instrument.get_states()
 
+    # Not tested
     def count_pulses(self, channel="FRQ", interval=1, block=True):
         """Method to count pulses on a digital input"""
         return self.instrument.count_pulses(channel, interval, block)
 
-    def fetch_pulse_conf(self):
+    # Not tested
+    def fetch_pulse_count(self):
         """Method to get the number of pulses counted since calling count_pulses"""
-        return self.instrument.fetch_pulse_conf()
+        return self.instrument.fetch_pulse_count()
