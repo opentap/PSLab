@@ -26,10 +26,10 @@ class CaptureVoltageStep(PSLabPublisherTestStep):
         available = self.AddProperty("Available", [1,2,4], List[Int32])
         available.AddAttribute(BrowsableAttribute, False)
 
-        prop = self.AddProperty("Samples", 0, Int32)
+        prop = self.AddProperty("Samples", 200, Int32)
         prop.AddAttribute(DisplayAttribute, "Samples", "Number of samples to fetch. Maximum is 10000 divided by number of channels.", "Measurements", -40)
 
-        prop = self.AddProperty("Timegap", 0.0, Double)
+        prop = self.AddProperty("Timegap", 10.0, Double)
         prop.AddAttribute(DisplayAttribute, "Time Gap", "Time gap between samples in microseconds.", "Measurements", -30)
 
     # Inherited method from PythonTap TestStep abstract class
@@ -40,17 +40,17 @@ class CaptureVoltageStep(PSLabPublisherTestStep):
         channel1 = results[1].tolist()
         if len(results) == 2:
             for i in range(0, len(time)):
-                self.PublishStepResult("Oscilloscope Results", ["Time", "Channel"], [time[i], channel1[i]])
+                self.PublishStepResult("Oscilloscope Results", ["Time", "Voltage"], [time[i], channel1[i]])
         elif len(results) == 3:
             channel2 = results[1].tolist()
             for i in range(0, len(time)):
-                self.PublishStepResult("Oscilloscope Results", ["Time", "Channel 1", "Channel 2"], [time[i], channel1[i], channel2[i]])
+                self.PublishStepResult("Oscilloscope Results", ["Time", "Voltage 1", "Voltage 2"], [time[i], channel1[i], channel2[i]])
         elif len(results) == 5:
             channel2 = results[1].tolist()
             channel3 = results[1].tolist()
             channel4 = results[1].tolist()
             for i in range(0, len(time)):
-                self.PublishStepResult("Oscilloscope Results", ["Time", "Channel 1", "Channel 2", "Channel 3", "Channel 4"], [time[i], channel1[i], channel2[i], channel3[i], channel4[i]])
+                self.PublishStepResult("Oscilloscope Results", ["Time", "Voltage 1", "Voltage 2", "Voltage 3", "Voltage 4"], [time[i], channel1[i], channel2[i], channel3[i], channel4[i]])
         pass
 
     # Inherited method from PythonTap TestStep abstract class
