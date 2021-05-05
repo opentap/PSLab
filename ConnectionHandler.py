@@ -9,6 +9,7 @@ from pslab.instrument.logic_analyzer import LogicAnalyzer
 from pslab.instrument.oscilloscope import Oscilloscope
 from pslab.instrument.waveform_generator import WaveformGenerator
 from pslab.instrument.power_supply import PowerSupply
+from pslab.instrument.multimeter import Multimeter
 
 _lock = threading.Lock()
 
@@ -44,3 +45,6 @@ class ConnectionHandler(object):
 
     def getLogicAnalyzer(self) -> LogicAnalyzer:
         return self.__getScienceLab().logic_analyzer
+
+    def getMultimeter(self) -> Multimeter:
+        return self.__getScienceLab().multimeter
