@@ -1,4 +1,4 @@
-﻿# Imported the plugin modules.
+# Imported the plugin modules.
 # These modules should be located relative to this __init__ file.
 # The '.' syntax is important for supporting both Python 3 and 2.
 # It denotes that the module is in the same folder.
@@ -17,11 +17,25 @@ from .WaveformGenerator import *
 from .GenerateWaveStep import *
 from .MeasureRMSVoltage import *
 from .GenerateSineWave import * 
+from .GenerateSquareWave import *
 from .Multimeter import *
 from .MeasureResistanceStep import *
 from .MeasureVoltageStep import *
 from .CalibrateCapacitanceStep import *
 from .MeasureCapacitanceStep import *
+from .LogicAnalyzer import *
+from .MeasureFrequencyStep import * 
+from .MeasureIntervalStep import * 
+from .MeasureDutyCycleStep import * 
+from .GetInitialStatesStep import * 
+from .GetStatesStep import * 
+from .FetchDataStep import *
+from .GetProgressStep import *
+from .StopCaptureStep import *
+from .GetPulseCountStep import *
+from .LogicAnalyzerCaptureStep import *
+from .CountPulsesStep import *
+
 ## Advanced Section ##
 IncludeLockManager = False 
 #IncludeLockManager = True # Uncomment this to include the lock manager example.

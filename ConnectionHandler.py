@@ -43,5 +43,8 @@ class ConnectionHandler(object):
     def getPowerSupply(self) -> PowerSupply:
         return self.__getScienceLab().power_supply
 
+    def getLogicAnalyzer(self) -> LogicAnalyzer:
+        return self.__getScienceLab().logic_analyzer
+
     def getMultimeter(self) -> Multimeter:
         return self.__getScienceLab().multimeter
