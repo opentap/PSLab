@@ -7,7 +7,7 @@ from pslab.serial_handler import SerialHandler
 from pslab import ScienceLab
 from pslab.instrument.logic_analyzer import LogicAnalyzer
 from pslab.instrument.oscilloscope import Oscilloscope
-from pslab.instrument.waveform_generator import WaveformGenerator
+from pslab.instrument.waveform_generator import WaveformGenerator, PWMGenerator
 from pslab.instrument.power_supply import PowerSupply
 from pslab.instrument.multimeter import Multimeter
 
@@ -39,6 +39,9 @@ class ConnectionHandler(object):
     
     def getWaveformGenerator(self) -> WaveformGenerator:
         return self.__getScienceLab().waveform_generator
+
+    def getPWMGenerator(self) -> PWMGenerator:
+        return self.__getScienceLab().pwm_generator
 
     def getPowerSupply(self) -> PowerSupply:
         return self.__getScienceLab().power_supply

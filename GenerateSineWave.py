@@ -48,4 +48,4 @@ class GenerateSineWave(TestStep):
     def Run(self):
         """Called when the test step is executed."""
         pinStr = getStrFromSineWavePin(self.Pin)
-        self.WaveformGenerator.generate(pinStr, self.Frequency, self.Phase)
+        self.WaveformGenerator.generate_sine(pinStr, self.Frequency, self.Phase)
