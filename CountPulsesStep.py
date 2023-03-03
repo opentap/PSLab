@@ -1,46 +1,46 @@
-import clr
-clr.AddReference("System.Collections")
+from OpenTap import AvailableValues, Display, Unit
+from System import Boolean, Double, String
 from System.Collections.Generic import List
-from System import Int32, Double, Boolean, String
-from System.ComponentModel import BrowsableAttribute # BrowsableAttribute can be used to hide things from the user.
+from opentap import *
 
-from PythonTap import *
-from OpenTap import DisplayAttribute, UnitAttribute, AvailableValuesAttribute
-
-from .PSLabSetterTestStep import PSLabSetterTestStep
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .LogicAnalyzer import *
 
-@Attribute(DisplayAttribute, "Count pulses", "Count pulses on a digital channel", Groups= ["PSLab", "Logic Analyzer"])
-class CountPulsesStep(PSLabPublisherTestStep):
+
+@attribute(
+    Display("Count pulses", "Count pulses on a digital channel", Groups=["PSLab", "Logic Analyzer"]))
+class CountPulsesStep(TestStep):
+    # Properties
+    channel = property(String, "FRQ") \
+        .add_attribute(Display("Channel", "Channel to count pulses on", "Measurements", -50)) \
+        .add_attribute(AvailableValues("Available"))
+
+    @property(List[String])
+    @attribute(Browsable(False))  # property not visible for the user.
+    def Available(self):
+        available = List[String]()
+        available.Add("LA1")
+        available.Add("LA2")
+        available.Add("LA3")
+        available.Add("LA4")
+        available.Add("FRQ")
+        return available
+
+    interval = property(Double, 1) \
+        .add_attribute(Display("Interval", "Time during which to count pulses", "Measurements", -40)) \
+        .add_attribute(Unit("s"))
+
+    block = property(Boolean, True) \
+        .add_attribute(
+        Display("Block", "Whether to block while waiting for pulses to be captured", "Measurements", -30))
+
+    LogicAnalyzer = property(LogicAnalyzer, None) \
+        .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
+
     def __init__(self):
         super(CountPulsesStep, self).__init__()
-        print("Count pulses step initialized")
 
-        prop = self.AddProperty("LogicAnalyzer", None, LogicAnalyzer)
-        prop.AddAttribute(DisplayAttribute, "Logic Analyzer", "", "Resources", -100)
-
-        selectable = self.AddProperty("channel", "FRQ", String)
-        selectable.AddAttribute(AvailableValuesAttribute, "Available")
-        selectable.AddAttribute(DisplayAttribute, "Channel", "Channel to count pulses on.", "Measurements", -50)
-        available = self.AddProperty("Available", ["LA1", "LA2", "LA3", "LA4", "FRQ"], List[String])
-        available.AddAttribute(BrowsableAttribute, False)
-
-        prop = self.AddProperty("interval", 1.0, Double)
-        prop.AddAttribute(DisplayAttribute, "Interval", "Time in seconds during which to count pulses.", "Measurements", -40)
-
-        prop = self.AddProperty("block", False, Boolean)
-        prop.AddAttribute(DisplayAttribute, "Block", "Whether to block while waiting for pulses to be captured.", "Measurements", -30)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
+        super().Run()  # 3.0: Required for debugging to work.
+
         data = self.LogicAnalyzer.count_pulses(self.channel, interval=self.interval, block=self.block)
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PrePlanRun(self):
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PostPlanRun(self):
-        pass
+        print(data)

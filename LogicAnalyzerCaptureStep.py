@@ -1,53 +1,51 @@
-import clr
-clr.AddReference("System.Collections")
+from OpenTap import AvailableValues, Display, EnabledIf, Unit
+from System import Boolean, Double, Int32
 from System.Collections.Generic import List
-from System import Int32, Double, Boolean, String
-from System.ComponentModel import BrowsableAttribute # BrowsableAttribute can be used to hide things from the user.
+from opentap import *
 
-from PythonTap import *
-from OpenTap import DisplayAttribute, UnitAttribute, AvailableValuesAttribute
-
-from .PSLabSetterTestStep import PSLabSetterTestStep
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .LogicAnalyzer import *
 
-@Attribute(DisplayAttribute, "Capture", "Captures logic events using Logic Analyzer", Groups= ["PSLab", "Logic Analyzer"])
-class LogicAnalyzerCaptureStep(PSLabPublisherTestStep):
+
+@attribute(
+    Display("Capture", "Captures logic events using Logic Analyzer", Groups=["PSLab", "Logic Analyzer"]))
+class LogicAnalyzerCaptureStep(TestStep):
+    # Properties
+    channels = property(Int32, 1) \
+        .add_attribute(AvailableValues("Available")) \
+        .add_attribute(Display("Channels", "Number of channels to sample from simultaneously",
+                               "Measurements", -50))
+
+    @property(List[Int32])
+    @attribute(Browsable(False))  # property not visible for the user.
+    def Available(self):
+        available = List[Int32]()
+        available.Add(1)
+        available.Add(2)
+        available.Add(3)
+        available.Add(4)
+        return available
+
+    events = property(Int32, 2500) \
+        .add_attribute(
+        Display("Events", "Number of logic events to capture on each channel", "Measurements", -40))
+
+    block = property(Boolean, True) \
+        .add_attribute(Display("Block", "Whether to block while waiting for events to be captured",
+                               "Measurements", -30))
+
+    timeout = property(Double, 1) \
+        .add_attribute(Display("Timeout", "Timeout before cancelling measurement in blocking mode",
+                               "Measurements", -20)) \
+        .add_attribute(Unit("s")) \
+        .add_attribute(EnabledIf("block"))
+
+    LogicAnalyzer = property(LogicAnalyzer, LogicAnalyzer()) \
+        .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
+
     def __init__(self):
         super(LogicAnalyzerCaptureStep, self).__init__()
-        print("Capture test step initialized")
 
-        prop = self.AddProperty("LogicAnalyzer", None, LogicAnalyzer)
-        prop.AddAttribute(DisplayAttribute, "Logic Analyzer", "", "Resources", -100)
-
-        selectable = self.AddProperty("channels", 1, Int32)
-        selectable.AddAttribute(AvailableValuesAttribute, "Available")
-        selectable.AddAttribute(DisplayAttribute, "Channels", "Number of channels to sample from simultaneously.", "Measurements", -50)
-        available = self.AddProperty("Available", [1,2,3,4], List[Int32])
-        available.AddAttribute(BrowsableAttribute, False)
-
-        prop = self.AddProperty("events", 2500, Int32)
-        prop.AddAttribute(DisplayAttribute, "Events", "Number of logic events to capture on each channel.", "Measurements", -40)
-
-        prop = self.AddProperty("timeout", 1.0, Double)
-        prop.AddAttribute(DisplayAttribute, "Timeout", "Timeout in seconds before cancelling measurement in blocking mode.", "Measurements", -40)
-
-        prop = self.AddProperty("block", False, Boolean)
-        prop.AddAttribute(DisplayAttribute, "Block", "Whether to block while waiting for events to be captured.", "Measurements", -30)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
+        super().Run()  # 3.0: Required for debugging to work.
+
         data = self.LogicAnalyzer.capture(self.channels, events=self.events, timeout=self.timeout, block=self.block)
-        """
-        if self.block:
-            self.PublishStepResult("Measured Interval", ["Interval"], [interval])
-        """
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PrePlanRun(self):
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PostPlanRun(self):
-        pass

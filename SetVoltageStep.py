@@ -2,40 +2,28 @@
 Test step to set the voltage on a PV1-3 pin
 """
 
+from OpenTap import Display, Unit
 from System import Double
-from enum import Enum
+from opentap import *
 
-from PythonTap import *
-from OpenTap import DisplayAttribute, UnitAttribute
-
-from .PSLabSetterTestStep import PSLabSetterTestStep
 from .PowerSupply import *
 
-@Attribute(DisplayAttribute, "Set Voltage", "Sets pin to a specific voltage", Groups= ["PSLab", "Power Supply"])
-class SetVoltageStep(PSLabSetterTestStep):
+
+@attribute(Display("Set Voltage", "Sets pin to a specific voltage", Groups=["PSLab", "Power Supply"]))
+class SetVoltageStep(TestStep):
+    # Properties
+    Pin = property(PowerPin, PowerPin.ONE) \
+        .add_attribute(Display("Pin", "The chosen PV pin", "", -50))
+
+    Voltage = property(Double, 0) \
+        .add_attribute(Display("Voltage", "The voltage to be output on the chosen PV pin", "", -40)) \
+        .add_attribute(Unit("V"))
+
+    PowerSupply = property(PowerSupply, None) \
+        .add_attribute(Display("Power Supply", "", "Resources", 0))
+
     def __init__(self):
         super(SetVoltageStep, self).__init__()
-        print("Set voltage test step initialized")
 
-        prop = self.AddProperty("Voltage", 0, Double)
-        prop.AddAttribute(DisplayAttribute, "Voltage", "The voltage to be output on the chosen PV pin", "Measurements", -50)
-        prop.AddAttribute(UnitAttribute, "V")
-
-        prop = self.AddProperty("Pin", PowerPin.ONE, PowerPin)
-        prop.AddAttribute(DisplayAttribute, "Pin", "The chosen PV pin", "", -50)
-
-        prop = self.AddProperty("PowerSupply", None, PowerSupply)
-        prop.AddAttribute(DisplayAttribute, "Power Supply", "", "Resources", -100)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
         self.PowerSupply.setVoltage(self.Pin, self.Voltage)
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PrePlanRun(self):
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PostPlanRun(self):
-        pass

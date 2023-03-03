@@ -1,14 +1,15 @@
-from PythonTap import *
-from OpenTap import DisplayAttribute
+from OpenTap import Display
+from opentap import *
 
-from .PSLabInstrument import PSLabInstrument
 from .ConnectionHandler import ConnectionHandler
 
-@Attribute(DisplayAttribute, "Multimeter", "Multimeter Instrument", "PSLab")
-class Multimeter(PSLabInstrument):
+
+@attribute(Display("Multimeter", "Multimeter Instrument", "PSLab"))
+class Multimeter(Instrument):
     def __init__(self):
         """Set up the properties, methods and default values of the instrument."""
-        super(Multimeter, self).__init__() # The base class initializer must be invoked.
+        super(Multimeter, self).__init__()  # The base class initializer must be invoked.
+        self.instrument = None
         self.Name = "Multimeter"
 
     def Open(self):
@@ -16,18 +17,16 @@ class Multimeter(PSLabInstrument):
         # Open COM connection to instrument using ConnectionHandler
         self.instrument = ConnectionHandler.instance().getMultimeter()
         """Called by TAP when the test plan starts"""
-        self.Info("PSLab Multimeter Opened")
 
     def Close(self):
         """Called by TAP when the test plan ends."""
-        self.Info("PSLab Multimeter Closed")
         super(Multimeter, self).Close()
 
     def measure_resistance(self):
         """Measure the resistance of a resistor connected between RES and GND."""
         return self.instrument.measure_resistance()
 
-    def measure_voltage(self, channel = "VOL"):
+    def measure_voltage(self, channel="VOL"):
         """Measure the voltage on the selected channel."""
         return self.instrument.measure_voltage(channel)
 
@@ -38,4 +37,3 @@ class Multimeter(PSLabInstrument):
     def measure_capacitance(self):
         """Measure the capacitance of a capacitor connected between CAP and GND."""
         return self.instrument.measure_capacitance()
-    
