@@ -1,44 +1,36 @@
-import clr
-clr.AddReference("System.Collections")
-from System.Collections.Generic import List
-from System import Int32, Double, Boolean
-from System.ComponentModel import BrowsableAttribute # BrowsableAttribute can be used to hide things from the user.
+from OpenTap import Display, Unit
+from System import Boolean, Double
+from opentap import *
 
-from PythonTap import *
-from OpenTap import DisplayAttribute, UnitAttribute, AvailableValuesAttribute
-
-from .PSLabSetterTestStep import PSLabSetterTestStep
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .LogicAnalyzer import *
 
-@Attribute(DisplayAttribute, "Measure Frequency", "Measures frequency on a digital pin", Groups= ["PSLab", "Logic Analyzer"])
-class MeasureFrequencyStep(PSLabPublisherTestStep):
+
+@attribute(
+    Display("Measure Frequency", "Measures frequency on a digital pin (in Hz)",
+            Groups=["PSLab", "Logic Analyzer"]))
+class MeasureFrequencyStep(TestStep):
+    # Properties
+    channel = property(DigitalPin, DigitalPin.LA1) \
+        .add_attribute(
+        Display("Channel", "Name of digital channel to measure frequency on", "Measurements", - 50))
+
+    simultaneous_oscilloscope = property(Boolean, False) \
+        .add_attribute(
+        Display("Simultaneously Using Oscilloscope", "Set to true if using oscilloscope at the same time",
+                "Measurements", -40))
+
+    timeout = property(Double, 1) \
+        .add_attribute(Display("Timeout", "Timeout before cancelling measurement", "Measurements", -30)) \
+        .add_attribute(Unit("s"))
+
+    LogicAnalyzer = property(LogicAnalyzer, None) \
+        .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
+
     def __init__(self):
         super(MeasureFrequencyStep, self).__init__()
-        print("Measure frequency test step initialized")
 
-        prop = self.AddProperty("LogicAnalyzer", None, LogicAnalyzer)
-        prop.AddAttribute(DisplayAttribute, "Logic Analyzer", "", "Resources", -100)
-
-        selectable = self.AddProperty("channel", DigitalPin.LA1, DigitalPin)
-        selectable.AddAttribute(DisplayAttribute, "Channel", "Name of digital channel to measure frequency on", "Measurements", -50)
-
-        prop = self.AddProperty("simultaneous_oscilloscope", False, Boolean)
-        prop.AddAttribute(DisplayAttribute, "Simultaneously Using Oscilloscope", "Set to true if using oscilloscope at the same time", "Measurements", -40)
-
-        prop = self.AddProperty("timeout", 0.0, Double)
-        prop.AddAttribute(DisplayAttribute, "Timeout", "Timeout in seconds before cancelling measurement", "Measurements", -30)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
-        frequency = self.LogicAnalyzer.measure_frequency(self.LogicAnalyzer.getPinName(self.channel), self.simultaneous_oscilloscope, self.timeout)
-        self.PublishStepResult("Measured Frequency", ["Frequency"], [frequency])
-        pass
+        super().Run()  # 3.0: Required for debugging to work.
 
-    # Inherited method from PythonTap TestStep abstract class
-    def PrePlanRun(self):
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PostPlanRun(self):
-        pass
+        frequency = self.LogicAnalyzer.measure_frequency(self.channel, self.simultaneous_oscilloscope, self.timeout)
+        self.PublishResult("Measured Frequency", ["Frequency (Hz)"], [frequency])

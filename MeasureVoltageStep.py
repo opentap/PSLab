@@ -1,29 +1,41 @@
-from PythonTap import *
-from OpenTap import DisplayAttribute
+from OpenTap import AvailableValues, Display
 from System import String
 from System.Collections.Generic import List
-from System.ComponentModel import BrowsableAttribute
+from opentap import *
 
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .Multimeter import *
 
-@Attribute(DisplayAttribute, "Measure Voltage", "Measures voltage on pin", Groups= ["PSLab", "Multimeter"])
-class MeasureVoltageStep(PSLabPublisherTestStep):
+
+@attribute(
+    Display("Measure Voltage", "Measures voltage between pin an GND (in V)", Groups=["PSLab", "Multimeter"]))
+class MeasureVoltageStep(TestStep):
+    # Properties
+    Channel = property(String, "VOL") \
+        .add_attribute(AvailableValues("Available")) \
+        .add_attribute(Display("Channel", "Channel to measure voltage from", "Measurements", -50))
+
+    Multimeter = property(Multimeter, None) \
+        .add_attribute(Display("Multimeter", "", "Resources", 0))
+
+    @property(List[String])
+    @attribute(Browsable(False))  # property not visible for the user.
+    def Available(self):
+        available = List[String]()
+        available.Add("CH1")
+        available.Add("CH2")
+        available.Add("CH3")
+        available.Add("MIC")
+        available.Add("CAP")
+        available.Add("RES")
+        available.Add("VOL")
+        return available
+
     def __init__(self):
         super(MeasureVoltageStep, self).__init__()
-        print("Measure resistance test step initialized")
 
-        prop = self.AddProperty("Multimeter", None, Multimeter)
-        prop.AddAttribute(DisplayAttribute, "Multimeter", "", "Resources", -100)
-
-        selectable = self.AddProperty("Channel", "VOL", String)
-        selectable.AddAttribute(AvailableValuesAttribute, "Available")
-        selectable.AddAttribute(DisplayAttribute, "Channel", "Channel to measure voltage from", "Measurements", -50)
-        available = self.AddProperty("Available", ["CH1", "CH2", "CH3", "MIC", "CAP", "RES", "VOL"], List[String])
-        available.AddAttribute(BrowsableAttribute, False)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
+        super().Run()  # 3.0: Required for debugging to work.
+
         voltage = float(self.Multimeter.measure_voltage(self.Channel))
         print(voltage)
-        super(MeasureVoltageStep, self).PublishStepResult("Multimeter", ["Voltage"], [voltage])
+        self.PublishResult("Multimeter", ["Voltage (V)"], [voltage])

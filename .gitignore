@@ -1,10 +1,11 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
+﻿# Visual Studio
 /.vs/slnx.sqlite
 /.vs/PSLab/v16/.suo
 /.vs/VSWorkspaceState.json
 /__pycache__
-/Python.PSLab.dll
-/Python.PSLab.cs
+
+# PyCharm and other IntelliJ IDEs
+.idea
+
+# VS Code
+.vscode

@@ -1,20 +1,22 @@
-from PythonTap import *
-from OpenTap import DisplayAttribute
+from OpenTap import Display
+from opentap import *
 
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .Multimeter import *
 
-@Attribute(DisplayAttribute, "Measure Capacitance", "Measures capacitor connected between CAP and GND", Groups= ["PSLab", "Multimeter"])
-class MeasureCapacitanceStep(PSLabPublisherTestStep):
+
+@attribute(Display("Measure Capacitance", "Measures capacitance connected between CAP and GND (in F)",
+                   Groups=["PSLab", "Multimeter"]))
+class MeasureCapacitanceStep(TestStep):
+    # Properties
+    Multimeter = property(Multimeter, None) \
+        .add_attribute(Display("Multimeter", "", "Resources", 0))
+
     def __init__(self):
         super(MeasureCapacitanceStep, self).__init__()
-        print("Measure resistance test step initialized")
 
-        prop = self.AddProperty("Multimeter", None, Multimeter)
-        prop.AddAttribute(DisplayAttribute, "Multimeter", "", "Resources", -100)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
+        super().Run()  # 3.0: Required for debugging to work.
+
         capacitance = float(self.Multimeter.measure_capacitance())
         print(capacitance)
-        super(MeasureCapacitanceStep, self).PublishStepResult("Multimeter", ["Capacitance"], [capacitance])
+        self.PublishResult("Multimeter", ["Capacitance (F)"], [capacitance])

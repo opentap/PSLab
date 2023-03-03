@@ -1,39 +1,26 @@
 """
 Test step to get the voltage on a PV1-3 pin
 """
+from OpenTap import Display
+from opentap import *
 
-from System import Double
-from enum import Enum
-
-from PythonTap import *
-from OpenTap import DisplayAttribute, UnitAttribute
-
-from .PSLabPublisherTestStep import PSLabPublisherTestStep
 from .PowerSupply import *
 
-@Attribute(DisplayAttribute, "Get Voltage", "Gets voltage of pin", Groups= ["PSLab", "Power Supply"])
-class GetVoltageStep(PSLabPublisherTestStep):
+
+@attribute(Display("Get Voltage", "Gets voltage of pin (in V)", Groups=["PSLab", "Power Supply"]))
+class GetVoltageStep(TestStep):
+    # Properties
+    Pin = property(PowerPin, PowerPin.ONE) \
+        .add_attribute(Display("Pin", "The chosen PV pin", "", -50))
+
+    PowerSupply = property(PowerSupply, None) \
+        .add_attribute(Display("Power Supply", "", "Resources", 0))
+
     def __init__(self):
         super(GetVoltageStep, self).__init__()
-        print("Get voltage test step initialized")
 
-        prop = self.AddProperty("Pin", PowerPin.ONE, PowerPin)
-        prop.AddAttribute(DisplayAttribute, "Pin", "The chosen PV pin", "", -50)
-
-        prop = self.AddProperty("PowerSupply", None, PowerSupply)
-        prop.AddAttribute(DisplayAttribute, "Power Supply", "", "Resources", -100)
-
-    # Inherited method from PythonTap TestStep abstract class
     def Run(self):
-        # super(GetVoltageStep, self).PublishStepResult("PowerSupply", ["Voltage"], [self.PowerSupply.getVoltage(self.Pin)])
+        super().Run()  # 3.0: Required for debugging to work.
+
         voltage = float(self.PowerSupply.getVoltage(self.Pin))
-        super(GetVoltageStep, self).PublishStepResult("PowerSupply", ["Voltage"], [voltage])
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PrePlanRun(self):
-        pass
-
-    # Inherited method from PythonTap TestStep abstract class
-    def PostPlanRun(self):
-        pass
+        self.PublishResult("PowerSupply", ["Voltage (V)"], [voltage])
