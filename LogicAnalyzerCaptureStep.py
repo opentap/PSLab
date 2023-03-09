@@ -39,7 +39,7 @@ class LogicAnalyzerCaptureStep(TestStep):
         .add_attribute(Unit("s")) \
         .add_attribute(EnabledIf("block"))
 
-    LogicAnalyzer = property(LogicAnalyzer, LogicAnalyzer()) \
+    LogicAnalyzer = property(LogicAnalyzer, None) \
         .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
 
     def __init__(self):
