@@ -10,7 +10,7 @@ from .PowerSupply import *
 @attribute(Display("Get Current", "Gets current of PCS pin (in A)", Groups=["PSLab", "Power Supply"]))
 class GetCurrentStep(TestStep):
     # Properties
-    PowerSupply = property(PowerSupply, PowerSupply()) \
+    PowerSupply = property(PowerSupply, None) \
         .add_attribute(Display("Power Supply", "", "Resources", 0))
 
     def __init__(self):
