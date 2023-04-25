@@ -1,7 +1,7 @@
 """
 Test step to generate a sine waveform
 """
-from OpenTap import Display, Unit
+from OpenTap import Display, Unit, Verdict
 from System import Double
 from opentap import *
 
@@ -34,3 +34,4 @@ class GenerateSineWave(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         self.WaveformGenerator.generate_sine(self.Pin, self.Frequency, self.Phase)
+        self.UpgradeVerdict(Verdict.Pass)

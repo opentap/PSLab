@@ -2,7 +2,7 @@
 Test step to set the current on the PCS pin on the PSLab board
 """
 
-from OpenTap import Display, Unit
+from OpenTap import Display, Unit, Verdict
 from System import Double
 from opentap import *
 
@@ -25,3 +25,4 @@ class SetCurrentStep(TestStep):
 
     def Run(self):
         self.PowerSupply.setPcs(self.Current)
+        self.UpgradeVerdict(Verdict.Pass)

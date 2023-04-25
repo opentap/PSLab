@@ -1,4 +1,4 @@
-from OpenTap import Display, Unit
+from OpenTap import Display, Output, Unit, Verdict
 from System import Boolean, Double
 from opentap import *
 
@@ -26,6 +26,11 @@ class MeasureFrequencyStep(TestStep):
     LogicAnalyzer = property(LogicAnalyzer, None) \
         .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
 
+    OutputValue = property(Double, 0.0) \
+        .add_attribute(Display("Frequency ", "Measured frequency", "Output", 99)) \
+        .add_attribute(Unit("Hz")) \
+        .add_attribute(Output())
+
     def __init__(self):
         super(MeasureFrequencyStep, self).__init__()
 
@@ -33,4 +38,8 @@ class MeasureFrequencyStep(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         frequency = self.LogicAnalyzer.measure_frequency(self.channel, self.simultaneous_oscilloscope, self.timeout)
+
+        self.OutputValue = frequency
+        self.log.Debug(f"Frequency: {frequency} Hz")
         self.PublishResult("Measured Frequency", ["Frequency (Hz)"], [frequency])
+        self.UpgradeVerdict(Verdict.Pass)

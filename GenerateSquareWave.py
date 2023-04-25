@@ -1,7 +1,7 @@
 ﻿"""
 Test step to generate a square waveform
 """
-from OpenTap import Display, Unit
+from OpenTap import Display, Unit, Verdict
 from System import Double
 from opentap import *
 
@@ -37,3 +37,4 @@ class GenerateSquareWave(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         self.WaveformGenerator.generate_square(self.Pin, self.Frequency, self.Duty_Cycles, self.Phases)
+        self.UpgradeVerdict(Verdict.Pass)

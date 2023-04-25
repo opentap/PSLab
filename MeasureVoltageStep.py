@@ -1,5 +1,5 @@
-from OpenTap import AvailableValues, Display
-from System import String
+from OpenTap import AvailableValues, Display, Output, Unit, Verdict
+from System import Double, String
 from System.Collections.Generic import List
 from opentap import *
 
@@ -16,6 +16,11 @@ class MeasureVoltageStep(TestStep):
 
     Multimeter = property(Multimeter, None) \
         .add_attribute(Display("Multimeter", "", "Resources", 0))
+
+    OutputValue = property(Double, 0.0) \
+        .add_attribute(Display("Current ", "Measured voltage", "Output", 99)) \
+        .add_attribute(Unit("V")) \
+        .add_attribute(Output())
 
     @property(List[String])
     @attribute(Browsable(False))  # property not visible for the user.
@@ -37,5 +42,8 @@ class MeasureVoltageStep(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         voltage = float(self.Multimeter.measure_voltage(self.Channel))
-        print(voltage)
+
+        self.OutputValue = voltage
+        self.log.Debug(f"Voltage: {voltage} V")
         self.PublishResult("Multimeter", ["Voltage (V)"], [voltage])
+        self.UpgradeVerdict(Verdict.Pass)

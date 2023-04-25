@@ -1,4 +1,4 @@
-from OpenTap import Display
+from OpenTap import Display, Verdict
 from opentap import *
 
 from .LogicAnalyzer import *
@@ -20,6 +20,7 @@ class GetStatesStep(TestStep):
         states = self.LogicAnalyzer.get_states()
         states_names = list(states.keys())
         states_values = list(states.values())
-        self.log.Info("pin names: " + ', '.join(states_names))
-        self.log.Info("pin states: " + ', '.join([str(val) for val in states_values]))
+        self.log.Debug("pin names: " + ', '.join(states_names))
+        self.log.Debug("pin states: " + ', '.join([str(val) for val in states_values]))
         self.PublishResult("States", states_names, states_values)
+        self.UpgradeVerdict(Verdict.Pass)

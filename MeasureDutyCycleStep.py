@@ -1,4 +1,4 @@
-from OpenTap import Display, Unit
+from OpenTap import Display, Unit, Verdict
 from System import Double
 from opentap import *
 
@@ -28,3 +28,4 @@ class MeasureDutyCycleStep(TestStep):
 
         period, duty_cycle = self.LogicAnalyzer.measure_duty_cycle(self.channel, self.timeout)
         self.PublishResult("Measured Duty Cycle", ["Period (ms)", "Duty Cycle"], [period, duty_cycle])
+        self.UpgradeVerdict(Verdict.Pass)

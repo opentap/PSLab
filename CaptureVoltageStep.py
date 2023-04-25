@@ -1,4 +1,4 @@
-from OpenTap import AvailableValues, Display, Unit
+from OpenTap import AvailableValues, Display, Unit, Verdict
 from System import Double, Int32
 from System.Collections.Generic import List
 from System.ComponentModel import Browsable  # BrowsableAttribute can be used to hide things from the user.
@@ -74,3 +74,5 @@ class CaptureVoltageStep(TestStep):
                                        [time[i], channel1[i], channel2[i], channel3[i], channel4[i]])
             case _:
                 raise Exception(f"Unexpected number of results: {len(results)}")
+
+        self.UpgradeVerdict(Verdict.Pass)
