@@ -1,4 +1,4 @@
-from OpenTap import Display
+from OpenTap import Display, Verdict
 from opentap import *
 
 from .Multimeter import *
@@ -18,3 +18,4 @@ class CalibrateCapacitanceStep(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         self.Multimeter.calibrate_capacitance()
+        self.UpgradeVerdict(Verdict.Pass)

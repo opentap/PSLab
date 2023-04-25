@@ -49,3 +49,4 @@ class LogicAnalyzerCaptureStep(TestStep):
         super().Run()  # 3.0: Required for debugging to work.
 
         data = self.LogicAnalyzer.capture(self.channels, events=self.events, timeout=self.timeout, block=self.block)
+        print(data)

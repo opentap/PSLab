@@ -1,5 +1,5 @@
-from OpenTap import AvailableValues, Display, Unit
-from System import Boolean, Double, String
+from OpenTap import AvailableValues, Display, EnabledIf, Output, Unit, Verdict
+from System import Boolean, Double, String, Int32
 from System.Collections.Generic import List
 from opentap import *
 
@@ -25,16 +25,22 @@ class CountPulsesStep(TestStep):
         available.Add("FRQ")
         return available
 
-    interval = property(Double, 1) \
-        .add_attribute(Display("Interval", "Time during which to count pulses", "Measurements", -40)) \
-        .add_attribute(Unit("s"))
-
     block = property(Boolean, True) \
         .add_attribute(
         Display("Block", "Whether to block while waiting for pulses to be captured", "Measurements", -30))
 
+    interval = property(Double, 1) \
+        .add_attribute(Display("Interval", "Time during which to count pulses", "Measurements", -40)) \
+        .add_attribute(Unit("s")) \
+        .add_attribute(EnabledIf("block"))
+
     LogicAnalyzer = property(LogicAnalyzer, None) \
         .add_attribute(Display("Logic Analyzer", "", "Resources", 0))
+
+    OutputValue = property(Int32, 0) \
+        .add_attribute(Display("Pulse Count ", "Counted pulses", "Output", 99)) \
+        .add_attribute(EnabledIf("block")) \
+        .add_attribute(Output())
 
     def __init__(self):
         super(CountPulsesStep, self).__init__()
@@ -42,5 +48,13 @@ class CountPulsesStep(TestStep):
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 
-        data = self.LogicAnalyzer.count_pulses(self.channel, interval=self.interval, block=self.block)
-        print(data)
+        pulsecount = self.LogicAnalyzer.count_pulses(self.channel, interval=self.interval, block=self.block)
+
+        if self.block:
+            self.OutputValue = pulsecount
+            self.log.Debug(f"Pulses: {pulsecount}")
+        else:
+            self.log.Debug("Counting pulses asynchronously, get pulse count via Get Pulse Count Step.")
+
+        self.PublishResult("Pulse Count", ["Pulse count"], [pulsecount])
+        self.UpgradeVerdict(Verdict.Pass)

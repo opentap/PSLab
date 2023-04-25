@@ -36,11 +36,11 @@ class PowerSupply(Instrument):
 
     def setPcs(self, current):
         self.instrument.pcs = current
-        self.log.Info(f"PSLab Power Supply PCS Current set to {current}")
+        self.log.Debug(f"PSLab Power Supply PCS Current set to {current} A")
 
     def getPcs(self):
         current = self.instrument.pcs
-        self.log.Info(f"PSLab Power Supply PCS Current is {current}")
+        self.log.Debug(f"PSLab Power Supply PCS Current is {current} A")
         return current
 
     def setVoltage(self, pin, voltage):
@@ -54,18 +54,18 @@ class PowerSupply(Instrument):
             case _:
                 raise Exception(f"Bad pin number: {pin}")
 
-        self.log.Info(f"PSLab Power Supply {pin} pin voltage set to {voltage}")
+        self.log.Debug(f"PSLab Power Supply {pin} pin voltage set to {voltage} V")
 
     def getVoltage(self, pin):
         match pin:
             case PowerPin.ONE:
-                self.log.Info(f"PSLab Power Supply {pin} pin voltage is {self.instrument.pv1}")
+                self.log.Debug(f"PSLab Power Supply {pin} pin voltage is {self.instrument.pv1} V")
                 return self.instrument.pv1
             case PowerPin.TWO:
-                self.log.Info(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv2}")
+                self.log.Debug(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv2} V")
                 return self.instrument.pv2
             case PowerPin.THREE:
-                self.log.Info(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv3}")
+                self.log.Debug(f"PSLab Power Supply {pin} pin voltage set to {self.instrument.pv3} V")
                 return self.instrument.pv3
             case _:
                 raise Exception(f"Bad pin number: {pin}")

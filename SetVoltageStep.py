@@ -2,7 +2,7 @@
 Test step to set the voltage on a PV1-3 pin
 """
 
-from OpenTap import Display, Unit
+from OpenTap import Display, Unit, Verdict
 from System import Double
 from opentap import *
 
@@ -27,3 +27,4 @@ class SetVoltageStep(TestStep):
 
     def Run(self):
         self.PowerSupply.setVoltage(self.Pin, self.Voltage)
+        self.UpgradeVerdict(Verdict.Pass)

@@ -1,4 +1,4 @@
-from OpenTap import AvailableValues, Display, Unit
+from OpenTap import AvailableValues, Display, Output, Unit, Verdict
 from System import Double, String
 from System.Collections.Generic import List
 from opentap import *
@@ -48,6 +48,11 @@ class MeasureIntervalStep(TestStep):
         .add_attribute(Display("Timeout", "Timeout before cancelling measurement", "Measurements", -10)) \
         .add_attribute(Unit("s"))
 
+    OutputValue = property(Double, 0.0) \
+        .add_attribute(Display("Interval ", "Measured interval", "Output", 99)) \
+        .add_attribute(Unit("µs")) \
+        .add_attribute(Output())
+
     def __init__(self):
         super(MeasureIntervalStep, self).__init__()
 
@@ -57,4 +62,8 @@ class MeasureIntervalStep(TestStep):
         interval = self.LogicAnalyzer.measure_interval(
             [self.channel1, self.channel2],
             [self.mode1, self.mode2], self.timeout)
+
+        self.OutputValue = interval
+        self.log.Debug(f"Interval: {interval} µs")
         self.PublishResult("Measured Interval", ["Interval (µs)"], [interval])
+        self.UpgradeVerdict(Verdict.Pass)

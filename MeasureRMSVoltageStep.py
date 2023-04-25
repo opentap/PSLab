@@ -1,6 +1,6 @@
 import math
 
-from OpenTap import AvailableValues, Display, TapThread, Unit
+from OpenTap import AvailableValues, Display, TapThread, Unit, Verdict
 from System import Double, String
 from System.Collections.Generic import List
 from opentap import *
@@ -70,3 +70,4 @@ class MeasureRMSVoltage(TestStep):
             sum_samples_i_2 += i * i
         rms_amplitude = math.sqrt(sum_samples_i_2 / len(voltages))
         self.PublishResult("RMS", ["Frequency", "RMS Voltage (V)"], [self.Frequency, rms_amplitude])
+        self.UpgradeVerdict(Verdict.Pass)

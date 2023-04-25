@@ -1,4 +1,4 @@
-from OpenTap import Display
+from OpenTap import Display, Verdict
 from opentap import *
 
 from .LogicAnalyzer import *
@@ -16,3 +16,4 @@ class StopCaptureStep(TestStep):
 
     def Run(self):
         self.LogicAnalyzer.stop()
+        self.UpgradeVerdict(Verdict.Pass)

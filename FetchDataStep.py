@@ -1,4 +1,4 @@
-from OpenTap import Display
+from OpenTap import Display, Verdict
 from opentap import *
 
 from .LogicAnalyzer import *
@@ -21,3 +21,5 @@ class FetchDataStep(TestStep):
         channels = [str(i + 1) for i in range(len(data))]
         for i in range(len(data[0])):
             self.PublishResult("Captured Data", channels, [data[channel][i] for channel in range(len(data))])
+
+        self.UpgradeVerdict(Verdict.Pass)

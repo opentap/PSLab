@@ -1,4 +1,4 @@
-from OpenTap import Display
+from OpenTap import Display, Verdict
 from opentap import *
 
 from .LogicAnalyzer import *
@@ -21,6 +21,7 @@ class GetInitialStatesStep(TestStep):
         initial_states = self.LogicAnalyzer.get_initial_states()
         initial_states_names = list(initial_states.keys())
         initial_states_values = list(initial_states.values())
-        self.log.Info("initial states: " + ', '.join(initial_states_names))
-        self.log.Info("initial values: " + ', '.join([str(val) for val in initial_states_values]))
+        self.log.Debug("initial states: " + ', '.join(initial_states_names))
+        self.log.Debug("initial values: " + ', '.join([str(val) for val in initial_states_values]))
         self.PublishResult("Initial States", initial_states_names, initial_states_values)
+        self.UpgradeVerdict(Verdict.Pass)
