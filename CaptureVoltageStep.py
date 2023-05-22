@@ -1,7 +1,7 @@
 from OpenTap import AvailableValues, Display, Unit, Verdict
 from System import Double, Int32
 from System.Collections.Generic import List
-from System.ComponentModel import Browsable  # BrowsableAttribute can be used to hide things from the user.
+from System.ComponentModel import Browsable
 from opentap import *
 
 from .Oscilloscope import *

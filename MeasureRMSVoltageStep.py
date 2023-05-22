@@ -3,6 +3,7 @@ import math
 from OpenTap import AvailableValues, Display, TapThread, Unit, Verdict
 from System import Double, String
 from System.Collections.Generic import List
+from System.ComponentModel import Browsable
 from opentap import *
 
 from .Oscilloscope import *

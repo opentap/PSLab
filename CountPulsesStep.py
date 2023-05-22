@@ -1,6 +1,7 @@
 from OpenTap import AvailableValues, Display, EnabledIf, Output, Unit, Verdict
 from System import Boolean, Double, String, Int32
 from System.Collections.Generic import List
+from System.ComponentModel import Browsable
 from opentap import *
 
 from .LogicAnalyzer import *
