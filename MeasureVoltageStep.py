@@ -1,6 +1,7 @@
 from OpenTap import AvailableValues, Display, Output, Unit, Verdict
 from System import Double, String
 from System.Collections.Generic import List
+from System.ComponentModel import Browsable
 from opentap import *
 
 from .Multimeter import *
