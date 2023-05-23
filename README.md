@@ -1,8 +1,6 @@
-https://pslab.io/
-
 # OpenTAP PSLab Plugin
 
-A free, open-source plugin for the OpenTAP testing automation framework to interact with a PSLab board.
+A free, open-source plugin for the OpenTAP testing automation framework to interact with a [PSLab](https://pslab.io) board.
 
 ## Installing/Building
 
@@ -14,6 +12,5 @@ This package depends on the Python OpenTAP package (v3.0.0) and the `pslab` Pyth
 
 ### Building
 
-1. Clone the contents of this repository into %TAP_PATH%/Packages/Python/PSLab.
-2. Navigate to %TAP_PATH% and run the command `tap python build PSLab`.
-3. The package should be built and ready to go!
+1. Clone the contents of this repository into %TAP_PATH%/Packages
+2. Package should be built and ready to go!
