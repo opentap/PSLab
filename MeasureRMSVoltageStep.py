@@ -57,6 +57,10 @@ class MeasureRMSVoltage(TestStep):
     def __init__(self):
         super(MeasureRMSVoltage, self).__init__()
 
+        self.Rules.Add(Rule("PreDelay", lambda: self.PreDelay >= 0, lambda: 'PreDelay must not be negative.'))
+        self.Rules.Add(Rule("Frequency", lambda: self.Frequency > 0, lambda: 'Frequency must be positive.'))
+        self.Rules.Add(Rule("Frequency", lambda: self.Frequency <= 31250, lambda: 'Frequency must not exceed 31250 Hz.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 

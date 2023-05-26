@@ -23,6 +23,9 @@ class SetCurrentStep(TestStep):
     def __init__(self):
         super(SetCurrentStep, self).__init__()
 
+        self.Rules.Add(Rule("Current", lambda: self.Current >= 0, lambda: 'Current must not be negative.'))
+        self.Rules.Add(Rule("Current", lambda: self.Current <= 3.3e-3, lambda: f'Current must not exceed {3.3e-3} A.'))
+
     def Run(self):
         self.PowerSupply.setPcs(self.Current)
         self.UpgradeVerdict(Verdict.Pass)

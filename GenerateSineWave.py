@@ -30,6 +30,11 @@ class GenerateSineWave(TestStep):
     def __init__(self):
         super(GenerateSineWave, self).__init__()
 
+        self.Rules.Add(
+            Rule("Frequency", lambda: self.Frequency >= 0.1, lambda: 'Frequency must be at least 0.1 Hz.'))
+        self.Rules.Add(
+            Rule("Frequency", lambda: self.Frequency < 4000000, lambda: 'Frequency must be lower than 4000000 Hz.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 

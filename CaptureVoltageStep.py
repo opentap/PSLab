@@ -36,10 +36,19 @@ class CaptureVoltageStep(TestStep):
 
     Timegap = property(Double, 10) \
         .add_attribute(Display("Time Gap", "Time gap between samples", "Measurements", -30)) \
-        .add_attribute(Unit("ms"))
+        .add_attribute(Unit("µs"))
 
     def __init__(self):
         super(CaptureVoltageStep, self).__init__()
+
+        self.Rules.Add(
+            Rule("Timegap", lambda: self.Timegap >= self.get_min_timegap(),
+                 lambda: f'Timegap for {self.Channels} channel(s) must be at least {self.get_min_timegap()} µs.'))
+        self.Rules.Add(
+            Rule("Samples", lambda: self.Samples >= 0, lambda: 'Number of samples must not be negative.'))
+        self.Rules.Add(
+            Rule("Samples", lambda: self.Samples <= self.get_max_samples(),
+                 lambda: f'Number of samples for {self.Channels} channel(s) must not exceed {self.get_max_samples():.0f}.'))
 
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
@@ -76,3 +85,27 @@ class CaptureVoltageStep(TestStep):
                 raise Exception(f"Unexpected number of results: {len(results)}")
 
         self.UpgradeVerdict(Verdict.Pass)
+
+    def get_min_timegap(self):
+        """Gets minimal time gap in µs for current number of channels."""
+        match self.Channels:
+            case 1:
+                return 0.5
+            case 2:
+                return 0.875
+            case 3 | 4:
+                return 1.75
+            case _:
+                raise Exception(f"Unexpected number of channels: {self.Channels}")
+
+    def get_max_samples(self):
+        """Gets maximum number of channels for current number of channels."""
+        match self.Channels:
+            case 1 | 2:
+                divisor = self.Channels
+            case 3 | 4:
+                divisor = 4
+            case _:
+                raise Exception(f"Unexpected number of channels: {self.Channels}")
+
+        return 10000 / divisor

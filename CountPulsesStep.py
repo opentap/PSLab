@@ -46,6 +46,9 @@ class CountPulsesStep(TestStep):
     def __init__(self):
         super(CountPulsesStep, self).__init__()
 
+        self.Rules.Add(
+            Rule("interval", lambda: not self.block or self.interval >= 0, lambda: 'Interval must not be negative.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 
