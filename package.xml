@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package Name="PSLab" xmlns="http://keysight.com/Schemas/tap" Version="$(GitVersion)" OS="Windows,Linux,MacOS">
+    <Description>This is the OpenTAP package containing instrument and test step plugins to interact with a PSLab board.</Description>
+    <Owner>Keysight Technologies, Inc.</Owner>
+    <SourceUrl>https://github.com/opentap/PSLab</SourceUrl>
+    <License>MIT</License>
+    <Dependencies>
+        <PackageDependency Package="OpenTAP"/>
+        <PackageDependency Package="Python" Version="^3.0.0"/>
+    </Dependencies>
+    <Files>
+        <File Path="Packages/PSLab/*.py" />
+        <File Path="Packages/PSLab/LICENSE" />
+        <File Path="Packages/PythonExamples/requirements.txt">
+            <PythonRequirements/> <!-- this defines pip dependencies -->
+        </File>
+    </Files>
+</Package>
