@@ -27,7 +27,7 @@ jobs:
       - name: Package plugins
         run: |
              pushd bin/Release/netstandard2.0
-             ./tap package create ../../package.xml
+             ./tap package create ../../../package.xml
              popd
       - name: Upload binaries
         uses: actions/upload-artifact@v3
@@ -35,4 +35,4 @@ jobs:
           name: TapPackage
           retention-days: 14
           path: |
-            bin/Release/*.TapPackage
+            bin/Release/netstandard2.0/*.TapPackage
