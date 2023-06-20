@@ -26,9 +26,7 @@ jobs:
         run: dotnet build --no-restore -c Release
       - name: Package plugins
         run: |
-             pushd bin/Release
-             ls
-             /bin/Release/tap
+             pushd bin/Release/netstandard2.0
              ./tap package create ../../package.xml
              popd
       - name: Upload binaries
