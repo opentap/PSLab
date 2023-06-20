@@ -11,7 +11,7 @@
     <Files>
         <File Path="Packages/PSLab/*.py" />
         <File Path="Packages/PSLab/LICENSE" />
-        <File Path="Packages/PythonExamples/requirements.txt">
+        <File Path="Packages/PSLab/requirements.txt">
             <PythonRequirements/> <!-- this defines pip dependencies -->
         </File>
     </Files>

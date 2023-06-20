@@ -3,12 +3,17 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="OpenTAP" Version="9.19.4" />
+        <OpenTapPackageReference Include="Python" Version="3.0" />
+    </ItemGroup>
     
     <ItemGroup>
       <Content Include="*.py">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-          <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
-      </Content>
+            <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
+        </Content>
         <Content Include="requirements.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
