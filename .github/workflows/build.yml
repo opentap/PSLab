@@ -24,7 +24,7 @@ jobs:
         run: dotnet build -c Release
       - name: Package plugins
         run: |
-             ./tap package create package.xml 
+             ./tap package create ../../package.xml 
       - name: Upload binaries
         uses: actions/upload-artifact@v3
         with:
