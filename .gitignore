@@ -9,3 +9,7 @@
 
 # VS Code
 .vscode
+
+#Build Results
+[Bb]in/
+[Oo]bj/

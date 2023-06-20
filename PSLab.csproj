@@ -13,7 +13,7 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
         </Content>
-        <Content Include="../LICENSE">
+        <Content Include="LICENSE">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>Packages\PSLab\LICENSE</Link>
         </Content>
