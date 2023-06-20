@@ -27,7 +27,7 @@ jobs:
       - name: Package plugins
         run: |
              pushd bin/Release
-             cd .
+             ls
              /bin/Release/tap
              ./tap package create ../../package.xml
              popd
