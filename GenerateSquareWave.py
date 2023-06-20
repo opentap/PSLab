@@ -33,6 +33,15 @@ class GenerateSquareWave(TestStep):
     def __init__(self):
         super(GenerateSquareWave, self).__init__()
 
+        self.Rules.Add(
+            Rule("Frequency", lambda: self.Frequency >= 4, lambda: 'Frequency must be at least 4 Hz.'))
+        self.Rules.Add(
+            Rule("Frequency", lambda: self.Frequency <= 10000000, lambda: 'Frequency must not exceed 10000000 Hz.'))
+        self.Rules.Add(
+            Rule("Duty_Cycles", lambda: self.Duty_Cycles >= 0.0, lambda: 'Duty Cycle must not be negative.'))
+        self.Rules.Add(
+            Rule("Duty_Cycles", lambda: self.Duty_Cycles <= 1.0, lambda: 'Duty Cycle must not exceed 1.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 

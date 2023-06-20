@@ -46,6 +46,12 @@ class LogicAnalyzerCaptureStep(TestStep):
     def __init__(self):
         super(LogicAnalyzerCaptureStep, self).__init__()
 
+        self.Rules.Add(
+            Rule("timeout", lambda: not self.block or self.timeout >= 0, lambda: 'Timeout must not be negative.'))
+        self.Rules.Add(Rule("events", lambda: self.events >= 0, lambda: 'Number of events must not be negative.'))
+        self.Rules.Add(
+            Rule("events", lambda: self.events <= 2500, lambda: 'Number of events cannot be greater than 2500.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 

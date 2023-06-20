@@ -23,6 +23,8 @@ class MeasureDutyCycleStep(TestStep):
     def __init__(self):
         super(MeasureDutyCycleStep, self).__init__()
 
+        self.Rules.Add(Rule("timeout", lambda: self.timeout >= 0, lambda: 'Timeout must not be negative.'))
+
     def Run(self):
         super().Run()  # 3.0: Required for debugging to work.
 
