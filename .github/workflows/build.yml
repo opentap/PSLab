@@ -20,8 +20,10 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build --no-restore -c Release
       - name: Package plugins
         run: |
              pushd bin/Release
