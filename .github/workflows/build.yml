@@ -54,16 +54,13 @@ jobs:
       - name: Restore dependencies
         run: dotnet build -c Release
       - name: Package plugins
-        run: |
-          pushd bin/Release/netstandard2.0
-          ./tap package create ../../../package.xml
-          popd
+        run: ./bin/Release/netstandard2.0/tap package create ./package.xml
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
           name: tap-package
           retention-days: 5
-          path: bin/Release/netstandard2.0/*.TapPackage
+          path: ./*.TapPackage
 
   publish:
     # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
@@ -85,4 +82,4 @@ jobs:
           packages: 'Repository Client:1.0.3-beta.2+a72735c4'
       
       - name: Publish Packages
-        run: tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage "$(find . -name '*.TapPackage')"
+        run: tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage

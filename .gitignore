@@ -13,3 +13,5 @@
 #Build Results
 [Bb]in/
 [Oo]bj/
+Packages/
+*.TapPackage
