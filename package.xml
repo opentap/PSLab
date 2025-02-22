@@ -15,4 +15,7 @@
             <PythonRequirements/> <!-- this defines pip dependencies -->
         </File>
     </Files>
+    <PackageActionExtensions>
+        <ActionStep ExeFile="tap" Arguments="python install-requirements" ActionName="install" />
+    </PackageActionExtensions>
 </Package>
