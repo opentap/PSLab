@@ -59,9 +59,10 @@ jobs:
         run: |
           python --version
           which python
-          where python
       - name: Restore dependencies
-        run: dotnet build -c Release
+        run: |
+          dotnet build -c Release
+          ./bin/Release/netstandard2.0/tap python set-path ${pythonLocation} -v
       - name: Package plugins
         run: ./bin/Release/netstandard2.0/tap package create ./package.xml
       - name: Upload binaries
