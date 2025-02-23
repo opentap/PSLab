@@ -64,6 +64,8 @@ jobs:
           "${pythonLocation}/python" --version
           "${pythonLocation}/python" -m venv .venv
           source .venv/bin/activate 
+          python --version
+          which python
           dotnet build -c Release
       - name: Upload binaries
         uses: actions/upload-artifact@v4
