@@ -66,8 +66,7 @@ jobs:
         with:
           name: tap-package
           retention-days: 5
-          working-directory: ./bin/Release/netstandard2.0
-          path: ./*.TapPackage
+          path: bin/Release/netstandard2.0/*.TapPackage
 
   publish:
     # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
