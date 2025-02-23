@@ -9,7 +9,7 @@
         <PackageDependency Package="Python" Version="^3.0.0"/>
     </Dependencies>
     <Files>
-        <File Path="Packages/PSLab/*.py" SourcePath="*.py" />
+        <File Path="Packages/PSLab/*.py" />
         <File Path="Packages/PSLab/LICENSE" SourcePath="LICENSE" />
         <File Path="Packages/PSLab/requirements.txt" SourcePath="requirements.txt" >
             <PythonRequirements/> <!-- this defines pip dependencies -->
