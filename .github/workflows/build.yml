@@ -60,7 +60,9 @@ jobs:
           python --version
           which python
       - name: Restore dependencies
-        run: dotnet build -c Release
+        run: |
+          "${pythonLocation}" --version 
+          dotnet build -c Release
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
