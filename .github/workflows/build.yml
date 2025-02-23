@@ -54,7 +54,11 @@ jobs:
       - name: Restore dependencies
         run: dotnet build -c Release
       - name: Package plugins
-        run: ./bin/Release/netstandard2.0/tap package create ./package.xml
+        run: |
+          export Architecture=AnyCPU
+          ./bin/Release/netstandard2.0/tap package create ./package.xml -o PSLab.$(GitVersion).$(Architecture).TapPackage
+          export Architecture=arm64
+          ./bin/Release/netstandard2.0/tap package create ./package.xml -o PSLab.$(GitVersion).$(Architecture).TapPackage
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
