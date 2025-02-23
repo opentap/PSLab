@@ -3,12 +3,25 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <OpenTapPackageDefinitionPath>package.xml</OpenTapPackageDefinitionPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <CreateOpenTapPackage>true</CreateOpenTapPackage>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <CreateOpenTapPackage>false</CreateOpenTapPackage>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="OpenTAP" Version="9.19.4" />
         <OpenTapPackageReference Include="Python" Version="^3.2.0-rc.3" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <None Update="LICENSE" CopyToOutputDirectory="Always" />
+        <None Update="requirements.txt" CopyToOutputDirectory="Always" />
+        <None Update="*.py" CopyToOutputDirectory="Always" />
     </ItemGroup>
     
 </Project>
