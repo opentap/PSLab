@@ -55,11 +55,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Find Python
         run: |
           python --version
           which python
           dotnet build -c Release
+          ./bin/Release/netstandard2.0/tap python set-python "${pythonLocation}/python"
+          ./bin/Release/netstandard2.0/tap python -v
+          dotnet build -c Release
+          
       # - name: Restore dependencies
       #   run: |
       #     "${pythonLocation}/python" --version
