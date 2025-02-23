@@ -63,7 +63,8 @@ jobs:
         run: |
           "${pythonLocation}/python" --version
           "${pythonLocation}/python" -m venv .venv
-          source .venv/bin/activate 
+          ls .venv/bin/
+          ls .venv/scripts/ 
           python --version
           which python
           dotnet build -c Release
