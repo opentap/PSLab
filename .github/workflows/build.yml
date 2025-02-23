@@ -59,16 +59,17 @@ jobs:
         run: |
           python --version
           which python
-      - name: Restore dependencies
-        run: |
-          "${pythonLocation}/python" --version
-          "${pythonLocation}/python" -m venv .venv
-          ls .venv/bin/
-          cat .venv/bin/activate
-          ./.venv/bin/activate
-          python --version
-          which python
           dotnet build -c Release
+      # - name: Restore dependencies
+      #   run: |
+      #     "${pythonLocation}/python" --version
+      #     "${pythonLocation}/python" -m venv .venv
+      #     ls .venv/bin/
+      #     cat .venv/bin/activate
+      #     ./.venv/bin/activate
+      #     python --version
+      #     which python
+      #     dotnet build -c Release
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
