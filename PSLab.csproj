@@ -9,18 +9,4 @@
         <OpenTapPackageReference Include="Python" Version="^3.2.0-rc.3" />
     </ItemGroup>
     
-    <ItemGroup>
-      <Content Include="*.py">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
-        </Content>
-        <Content Include="requirements.txt">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>Packages\PSLab\%(Filename)%(Extension)</Link>
-        </Content>
-        <Content Include="LICENSE">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>Packages\PSLab\LICENSE</Link>
-        </Content>
-    </ItemGroup>
 </Project>
