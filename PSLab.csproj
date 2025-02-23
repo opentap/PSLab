@@ -21,7 +21,7 @@
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
         <None Update="LICENSE" CopyToOutputDirectory="Always" />
         <None Update="requirements.txt" CopyToOutputDirectory="Always" />
-        <None Update="*.py" CopyToOutputDirectory="Always" Link="Packages/PSLab/*.py" />
+        <None Update="*.py" CopyToOutputDirectory="Always" Link="Packages/PSLab/%(FileName)%(Extension)" />
     </ItemGroup>
     
 </Project>
