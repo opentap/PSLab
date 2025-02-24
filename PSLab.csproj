@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="OpenTAP" Version="9.19.4" />
+        <PackageReference Include="OpenTAP" Version="9.23.0" />
         <OpenTapPackageReference Include="Python" Version="^3.2.0-rc.3" />
     </ItemGroup>
 
