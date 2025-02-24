@@ -91,11 +91,6 @@ jobs:
       
       - name: Publish Packages
         run: |
-          printenv
-          echo ap
-          echo "${ARTIFACT_PATH}"
-          ls -la "${ARTIFACT_PATH}"
-
-          ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ARTIFACT_PATH}/*.TapPackage" -v
+          tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ARTIFACT_PATH}/*.TapPackage" -v
         env:
           ARTIFACT_PATH: ${{ steps.download-binaries.outputs.download-path }}
