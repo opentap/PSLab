@@ -64,8 +64,8 @@ jobs:
           ls -la "${pythonLocation}/bin"
           ls -la "${pythonLocation}/lib"
           ls -la "${pythonLocation}/share"
-          ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}" -v 
-          ./bin/Release/netstandard2.0/tap python -v
+          ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}/bin" -v 
+          ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib" -v 
           dotnet build -c Release
           
       # - name: Restore dependencies
