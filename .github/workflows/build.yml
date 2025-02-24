@@ -59,7 +59,7 @@ jobs:
         run: |
           dotnet build -c Release
           ./bin/Release/netstandard2.0/tap python install-requirements
-          dotnet build -c Release
+          ./bin/Release/netstandard2.0/tap package create ./package.xml -v   
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
