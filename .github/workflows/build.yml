@@ -63,7 +63,12 @@ jobs:
           name: tap-package
           retention-days: 5
           path: ./bin/Release/*.TapPackage
-
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: session-logs
+          retention-days: 5
+          path: ./bin/Release/SessionLogs/*.txt
   publish:
     # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
     runs-on:
