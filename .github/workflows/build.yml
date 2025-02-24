@@ -48,10 +48,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
-      # - name: Set up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.8'
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Build 
@@ -63,17 +59,11 @@ jobs:
           name: tap-package
           retention-days: 5
           path: ./bin/Release/*.TapPackage
-      - name: Upload logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: session-logs
-          retention-days: 5
-          path: ./bin/Release/SessionLogs/*.txt
+
   publish:
-    # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
     runs-on:
-       group: OpenTAP-SpokeVPC
-       labels:  [Linux, X64]
+      group: OpenTAP-SpokeVPC
+      labels:  [Linux, X64]
     container: ghcr.io/opentap/oci-images/build-dotnet:latest
     needs: Build
     steps:
@@ -82,15 +72,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tap-package
-
       - name: Setup OpenTAP
         uses: opentap/setup-opentap@main
         with:
           version: 9.25.1
-          packages: 'Repository Client:1.0.3-beta.2+a72735c4'
-      
+          packages: 'Repository Client:1.0.3-beta.2+a72735c4'      
       - name: Publish Packages
         run: |
-          tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ARTIFACT_PATH}/*.TapPackage" -v
+          tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ARTIFACT_PATH}/*.TapPackage"
         env:
           ARTIFACT_PATH: ${{ steps.download-binaries.outputs.download-path }}
