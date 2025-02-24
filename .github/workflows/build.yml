@@ -60,7 +60,10 @@ jobs:
           python --version
           which python
           dotnet build -c Release
-          ls "${pythonLocation}"
+          ls -la "${pythonLocation}"
+          ls -la "${pythonLocation}/bin"
+          ls -la "${pythonLocation}/lib"
+          ls -la "${pythonLocation}/share"
           ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}" -v 
           ./bin/Release/netstandard2.0/tap python -v
           dotnet build -c Release
