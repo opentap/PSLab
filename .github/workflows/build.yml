@@ -56,34 +56,10 @@ jobs:
         with:
           python-version: '3.8'
       - name: Build 
-        env:
-          PYTHONHOME: ${ env.pythonLocation }
         run: |
-          python --version
-          which python
           dotnet build -c Release
-          echo base
-          ls -la "${pythonLocation}"
-          echo bin
-          ls -la "${pythonLocation}/bin"
-          echo lib
-          ls -la "${pythonLocation}/lib"
-          echo share
-          ls -la "${pythonLocation}/share"
-          # ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}/bin" -v 
           ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib/libpython3.8.so" -v 
           dotnet build -c Release
-          
-      # - name: Restore dependencies
-      #   run: |
-      #     "${pythonLocation}/python" --version
-      #     "${pythonLocation}/python" -m venv .venv
-      #     ls .venv/bin/
-      #     cat .venv/bin/activate
-      #     ./.venv/bin/activate
-      #     python --version
-      #     which python
-      #     dotnet build -c Release
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
