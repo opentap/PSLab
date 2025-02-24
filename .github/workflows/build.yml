@@ -27,10 +27,10 @@ jobs:
         uses: opentap/get-gitversion@main
 
   Build:
-    runs-on:
-      group: OpenTAP-SpokeVPC
-      labels:  [Linux, X64]
-    container: ghcr.io/opentap/oci-images/build-dotnet:latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-22.04 ]
     needs: GetVersion
     env:
       ShortVersion: ${{ needs.GetVersion.outputs.ShortVersion }}
@@ -58,8 +58,8 @@ jobs:
       - name: Build 
         run: |
           dotnet build -c Release
-          ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib/libpython3.8.so" -v 
-          dotnet build -c Release
+          # ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib/libpython3.8.so" -v 
+          # dotnet build -c Release
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
