@@ -52,6 +52,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
+      - name: Install requirements
+        run: pip install -r requirements.txt
       - name: Build 
         run: |
           dotnet build -c Release 
@@ -60,7 +62,7 @@ jobs:
         with:
           name: tap-package
           retention-days: 5
-          path: bin/Release/netstandard2.0/*.TapPackage
+          path: ./bin/Release/*.TapPackage
 
   publish:
     # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
@@ -83,4 +85,4 @@ jobs:
       
       - name: Publish Packages
         run: ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage
-        working-directory: bin/Release/netstandard2.0
+        working-directory: ./bin/Release

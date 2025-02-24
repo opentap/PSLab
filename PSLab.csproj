@@ -3,10 +3,13 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <OpenTapPackageDefinitionPath>package.xml</OpenTapPackageDefinitionPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <CreateOpenTapPackage>true</CreateOpenTapPackage>
+        <InstallCreatedOpenTapPackage>false</InstallCreatedOpenTapPackage>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
