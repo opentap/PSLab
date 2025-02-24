@@ -69,7 +69,7 @@ jobs:
           echo share
           ls -la "${pythonLocation}/share"
           # ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}/bin" -v 
-          ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib" -v 
+          ./bin/Release/netstandard2.0/tap python set-lib-path "${pythonLocation}/lib/libpython3.8.so" -v 
           dotnet build -c Release
           
       # - name: Restore dependencies
