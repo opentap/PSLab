@@ -60,7 +60,7 @@ jobs:
           python --version
           which python
           dotnet build -c Release
-          ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}/python"
+          ./bin/Release/netstandard2.0/tap python set-path "${pythonLocation}"
           ./bin/Release/netstandard2.0/tap python -v
           dotnet build -c Release
           
