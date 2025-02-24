@@ -90,4 +90,3 @@ jobs:
       
       - name: Publish Packages
         run: ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "$(find . -name "*.TapPackage")"
-        working-directory: ./bin/Release
