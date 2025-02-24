@@ -78,6 +78,7 @@ jobs:
     needs: Build
     steps:
       - name: Download binaries
+        id: download-binaries
         uses: actions/download-artifact@v4
         with:
           name: tap-package
@@ -89,4 +90,6 @@ jobs:
           packages: 'Repository Client:1.0.3-beta.2+a72735c4'
       
       - name: Publish Packages
-        run: ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "$(find . -name "*.TapPackage")"
+        run: ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ ARTIFACT_PATH }/*.TapPackage" -v
+        env:
+          ARTIFACT_PATH: ${{ steps.download-binaries.outputs.download-path }}
