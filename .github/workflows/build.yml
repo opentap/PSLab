@@ -27,10 +27,7 @@ jobs:
         uses: opentap/get-gitversion@main
 
   Build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-22.04 ]
+    runs-on: ubuntu-22.04
     needs: GetVersion
     env:
       ShortVersion: ${{ needs.GetVersion.outputs.ShortVersion }}
@@ -57,10 +54,7 @@ jobs:
           python-version: '3.8'
       - name: Build 
         run: |
-          dotnet build -c Release
-          ./bin/Release/netstandard2.0/tap python install-requirements
-          ./bin/Release/netstandard2.0/tap package list -i
-          ./bin/Release/netstandard2.0/tap package create ./package.xml -v   
+          dotnet build -c Release 
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
@@ -88,4 +82,5 @@ jobs:
           packages: 'Repository Client:1.0.3-beta.2+a72735c4'
       
       - name: Publish Packages
-        run: tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage
+        run: ./tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage
+        working-directory: bin/Release/netstandard2.0
