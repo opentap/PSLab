@@ -93,7 +93,7 @@ jobs:
         run: |
           printenv
           echo ap1
-          echo "$ARTIFACT_PATH"
+          # echo "$ARTIFACT_PATH"
           echo ap2
           echo "${ARTIFACT_PATH}"
           echo ap3
