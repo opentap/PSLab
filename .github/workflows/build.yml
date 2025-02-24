@@ -27,10 +27,7 @@ jobs:
         uses: opentap/get-gitversion@main
 
   Build:
-    runs-on:
-      group: OpenTAP-SpokeVPC
-      labels:  [Linux, X64]
-    container: ghcr.io/opentap/oci-images/build-dotnet:latest
+    runs-on: ubuntu-22.04
     needs: GetVersion
     env:
       ShortVersion: ${{ needs.GetVersion.outputs.ShortVersion }}
@@ -51,35 +48,37 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
-      - name: Restore dependencies
-        run: dotnet build -c Release
-      - name: Package plugins
-        run: ./bin/Release/netstandard2.0/tap package create ./package.xml
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Build 
+        run: |
+          dotnet build -c Release 
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
           name: tap-package
           retention-days: 5
-          path: ./*.TapPackage
+          path: ./bin/Release/*.TapPackage
 
   publish:
-    # if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/heads/release') || contains(github.ref, 'refs/tags/v')
     runs-on:
-       group: OpenTAP-SpokeVPC
-       labels:  [Linux, X64]
+      group: OpenTAP-SpokeVPC
+      labels:  [Linux, X64]
     container: ghcr.io/opentap/oci-images/build-dotnet:latest
     needs: Build
     steps:
       - name: Download binaries
+        id: download-binaries
         uses: actions/download-artifact@v4
         with:
           name: tap-package
-
       - name: Setup OpenTAP
         uses: opentap/setup-opentap@main
         with:
           version: 9.25.1
-          packages: 'Repository Client:1.0.3-beta.2+a72735c4'
-      
+          packages: 'Repository Client:1.0.3-beta.2+a72735c4'      
       - name: Publish Packages
-        run: tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} *.TapPackage
+        run: |
+          tap repo upload --repository https://packages.opentap.io --token ${{ secrets.PUBLIC_REPO_TOKEN }} "${ARTIFACT_PATH}/*.TapPackage"
+        env:
+          ARTIFACT_PATH: ${{ steps.download-binaries.outputs.download-path }}
